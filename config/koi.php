@@ -214,4 +214,7 @@ return [
             '19' => '19%'
         ]
     ],
+    'template' => [
+        'bg' => 'bg-green'
+    ],
 ];

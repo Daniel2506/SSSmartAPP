@@ -14,7 +14,8 @@ app || (app = {});
         el: '#user-create',
         template: _.template( ($('#add-user-tpl').html() || '') ),
         events: {
-            'submit #form-user': 'onStore'
+            'submit #form-user': 'onStore',
+            'submit #form-item-roles': 'onStoreRol'
         },
 
         /**
@@ -31,6 +32,22 @@ app || (app = {});
         },
 
         /**
+        * Reference to views
+        */
+        referenceViews: function () {
+            // Rol list
+            this.rolesListView = new app.RolesListView( {
+                collection: this.rolList,
+                parameters: {
+                    edit: true,
+                    wrapper: this.$('#wrapper-roles'),
+                    dataFilter: {
+                        'user': this.model.get('id')
+                    }
+               }
+            });
+        },
+        /**
         * Event Create User
         */
         onStore: function (e) {
@@ -41,19 +58,37 @@ app || (app = {});
                 this.model.save( data, {patch: true, silent: true} );
             }
         },
+        /**
+        * Event add item rol
+        */
+        onStoreRol: function (e) {
+            if (!e.isDefaultPrevented()) {
+                e.preventDefault();
 
+                // Prepare global data
+                var data = window.Misc.formToJson( e.target );
+                this.rolList.trigger( 'store', data );
+            }
+        },
         /*
         * Render View Element
         */
         render: function() {
+
             var attributes = this.model.toJSON();
             this.$wraperForm.html( this.template(attributes) );
+            this.$password = this.$('#password');
+            this.$password_confirmation = this.$('#password_confirmation');
 
+            if( this.model.id != undefined ) {
+                this.rolList = new app.RolList();
+                this.referenceViews();
+            }
             this.ready();
         },
 
         /**
-        * fires libraries js
+        * Fires libraries js
         */
         ready: function () {
             // to fire plugins
@@ -65,6 +100,9 @@ app || (app = {});
 
             if( typeof window.initComponent.initSpinner == 'function' )
                 window.initComponent.initSpinner();
+
+            if( typeof window.initComponent.initSelect2 == 'function' )
+                window.initComponent.initSelect2();
         },
 
         /**
@@ -75,7 +113,7 @@ app || (app = {});
         },
 
         /**
-        * response of the server
+        * Response of the server
         */
         responseServer: function ( model, resp, opts ) {
             window.Misc.removeSpinner( this.el );
@@ -91,8 +129,10 @@ app || (app = {});
                     alertify.error(text);
                     return;
                 }
+                this.$password.val('');
+                this.$password_confirmation.val('');
 
-                window.Misc.redirect( window.Misc.urlFull( Route.route('usuarios.index') ) );
+                Backbone.history.navigate(Route.route('usuarios.edit', { usuarios: resp.id}), { trigger:true });
             }
         }
     });

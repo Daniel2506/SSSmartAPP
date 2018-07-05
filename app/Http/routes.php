@@ -38,6 +38,18 @@ Route::group(['middleware' => 'auth'], function()
 	| Admin Routes
 	|-------------------------
 	*/
+	Route::group(['prefix' => 'usuarios'], function()
+	{
+		Route::resource('roles', 'Admin\UsuarioRolController', ['only' => ['index', 'store', 'destroy']]);
+	});
+	Route::group(['prefix' => 'roles'], function()
+	{
+		Route::resource('permisos', 'Admin\PermisoRolController', ['only' => ['index', 'update', 'destroy']]);
+	});
+
+	Route::resource('roles', 'Admin\RolController', ['except' => ['destroy']]);
+	Route::resource('permisos', 'Admin\PermisoController', ['only' => ['index']]);
+	Route::resource('modulos', 'Admin\ModuloController', ['only' => ['index']]);
 	Route::resource('usuarios', 'Admin\UserController', ['except' => ['destroy']]);
 	Route::resource('maquinas', 'Admin\MaquinaController', ['except' => ['destroy']]);
 	Route::resource('bitacoras', 'Admin\BitacoraController', ['except' => ['destroy']]);

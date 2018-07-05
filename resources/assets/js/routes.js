@@ -19,10 +19,15 @@ app || (app = {});
             | Administracion
             |-----------------------
             */
+            // Roles
+            'roles(/)': 'getRolesMain',
+            'roles/create(/)': 'getRolesCreate',
+            'roles/:rol/edit(/)': 'getRolesEdit',
 
             // Users
             'usuarios(/)': 'getUsersMain',
             'usuarios/create(/)': 'getUserCreate',
+            'usuarios/:ususarios(/)': 'getUserShow',
             'usuarios/:usuarios/edit(/)': 'getUserEdit',
 
             // Machines
@@ -67,6 +72,7 @@ app || (app = {});
         */
         initialize : function ( opts ){
             // Initialize resources
+            this.componentGlobalView = new app.ComponentGlobalView();
       	},
 
         /**
@@ -94,7 +100,57 @@ app || (app = {});
 
             this.loginView = new app.UserLoginView( );
         },
+        /**
+        * show view main roles
+        */
+        getRolesMain: function () {
 
+            if ( this.mainRolesView instanceof Backbone.View ){
+                this.mainRolesView.stopListening();
+                this.mainRolesView.undelegateEvents();
+            }
+
+            this.mainRolesView = new app.MainRolesView( );
+        },
+
+        /**
+        * show view create roles
+        */
+        getRolesCreate: function () {
+            this.rolModel = new app.RolModel();
+
+            if ( this.createRolView instanceof Backbone.View ){
+                this.createRolView.stopListening();
+                this.createRolView.undelegateEvents();
+            }
+
+            this.createRolView = new app.CreateRolView({ model: this.rolModel });
+            this.createRolView.render();
+        },
+
+        /**
+        * show view edit roles
+        */
+        getRolesEdit: function (rol) {
+            this.rolModel = new app.RolModel();
+            this.rolModel.set({'id': rol}, {silent: true});
+
+            if ( this.editRolView instanceof Backbone.View ){
+                this.editRolView.stopListening();
+                this.editRolView.undelegateEvents();
+            }
+
+            if ( this.createRolView instanceof Backbone.View ){
+                this.createRolView.stopListening();
+                this.createRolView.undelegateEvents();
+            }
+
+            this.editRolView = new app.EditRolView({ model: this.rolModel });
+            this.rolModel.fetch();
+        },
+        /**
+        * show view main users
+        */
         getUsersMain: function () {
 
             if ( this.mainUsersView instanceof Backbone.View ){
@@ -104,7 +160,9 @@ app || (app = {});
 
             this.mainUsersView = new app.MainUsersView( );
         },
-
+        /**
+        * show view create users
+        */
         getUserCreate: function () {
             this.userModel = new app.UserModel();
 
@@ -116,7 +174,23 @@ app || (app = {});
             this.createUserView = new app.CreateUserView({ model: this.userModel });
             this.createUserView.render();
         },
+        /**
+        * show view show user
+        */
+        getUserShow: function (user) {
+            this.userModel = new app.UserModel();
+            this.userModel.set({'id': user}, {'silent':true});
 
+            if ( this.showUserView instanceof Backbone.View ){
+                this.showUserView.stopListening();
+                this.showUserView.undelegateEvents();
+            }
+
+            this.showUserView = new app.ShowUserView({ model: this.userModel });
+        },
+        /**
+        * show view edit users
+        */
         getUserEdit: function (user) {
             this.userModel = new app.UserModel();
             this.userModel.set({'id': user}, {'silent':true});
@@ -129,7 +203,9 @@ app || (app = {});
             this.createUserView = new app.CreateUserView({ model: this.userModel });
             this.userModel.fetch();
         },
-
+        /**
+        * show view main machine
+        */
         getMachinesMain: function(){
             if ( this.mainMachinesView instanceof Backbone.View ){
                 this.mainMachinesView.stopListening();
@@ -138,7 +214,9 @@ app || (app = {});
 
             this.mainMachinesView = new app.MainMachinesView( );
         },
-
+        /**
+        * show view create machine
+        */
         getMachineCreate: function () {
             this.machineModel = new app.MachineModel();
 
@@ -150,7 +228,9 @@ app || (app = {});
             this.createMachineView = new app.CreateMachineView({ model: this.machineModel });
             this.createMachineView.render();
         },
-
+        /**
+        * show view edit machine
+        */
         getMachineEdit: function (machine) {
             this.machineModel = new app.MachineModel();
             this.machineModel.set({'id': machine}, {'silent':true});
@@ -163,7 +243,9 @@ app || (app = {});
             this.createMachineView = new app.CreateMachineView({ model: this.machineModel });
             this.machineModel.fetch();
         },
-
+        /**
+        * show view main bills
+        */
         getBillsMain: function(){
             if ( this.mainBillsView instanceof Backbone.View ){
                 this.mainBillsView.stopListening();
@@ -172,7 +254,9 @@ app || (app = {});
 
             this.mainBillsView = new app.MainBillsView( );
         },
-
+        /**
+        * show view binnacles bills
+        */
         getBinnaclesMain: function(){
             if ( this.mainBinnaclesView instanceof Backbone.View ){
                 this.mainBinnaclesView.stopListening();

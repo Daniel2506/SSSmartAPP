@@ -6,7 +6,7 @@
 @stop
 
 @section('module')
-    <div class="box box-success">
+    <div class="box box-success" id="user-show">
         <div class="box-body">
             <div class="row">
                 <div class="form-group col-sm-4">
@@ -36,6 +36,28 @@
                     <div>{{ $user->created_at }} </div>
                 </div>
             </div>
+            <div class=" col-sm-8 col-md-offset-2">
+                <div class="box box-success">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Roles de usuario</h3>
+                    </div>
+                    <div class="box-body">
+                        <!-- table table-bordered table-striped -->
+                        <div class="table-responsive no-padding">
+                            <table id="browse-roles-list" class="table table-bordered" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th width="100%">Nombre</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{-- Render content roles --}}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="box-footer with-border">
@@ -48,5 +70,7 @@
                 </div>
             </div>
         </div>
+
+
     </div>
 @stop

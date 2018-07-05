@@ -15,4 +15,7 @@
     <li class="{{ Request::segment(1) == 'usuarios' ? 'active' : '' }}">
         <a href="{{ route('usuarios.index') }}"><i class="fa fa-users"></i> <span>Usuarios</span></a>
     </li>
+    <li class="{{ Request::segment(1) == 'roles' ? 'active' : '' }}">
+        <a href="{{ route('roles.index') }}"><i class="fa fa-address-card-o"></i><span>Roles </span></a>
+    </li>
 </ul>
