@@ -82,7 +82,7 @@ app || (app = {});
             var config = { pushState: true };
 
             if( document.domain.search(/(104.236.57.82|localhost)/gi) != '-1' ) {
-                config.root = '/SSSmart/public/';
+                config.root = '/SSSmartAPP/public/';
             }
 
             Backbone.history.start( config );
