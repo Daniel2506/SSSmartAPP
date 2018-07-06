@@ -6,7 +6,7 @@
 @stop
 
 @section('module')
-    <div class="box box-success" id="user-show">
+    <div class="box box-danger" id="user-show">
         <div class="box-body">
             <div class="row">
                 <div class="form-group col-sm-4">

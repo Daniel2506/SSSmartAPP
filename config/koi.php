@@ -8,9 +8,10 @@ return [
 
     'app' => [
         'name' => 'SS&Smart',
-        'site' => '',
+        'site' => 'http://syssmart.com.co',
         'image' => [
             'logo' => '/images/logo.png',
+            'mlogo' => '/images/logo1.png',
             'avatar' => '/images/avatar.svg'
         ],
     	'ano' => 2018

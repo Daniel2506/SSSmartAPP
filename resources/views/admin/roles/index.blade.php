@@ -12,7 +12,7 @@
     </section>
 
     <section class="content">
-        <div class="box box-success" id="roles-main">
+        <div class="box box-danger" id="roles-main">
             <div class="box-body">
                 <div class="table-responsive">
                     <table id="roles-search-table" class="table table-bordered table-striped" cellspacing="0" width="100%">

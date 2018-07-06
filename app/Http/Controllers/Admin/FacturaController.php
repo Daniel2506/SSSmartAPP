@@ -55,7 +55,8 @@ class FacturaController extends Controller
      */
     public function show($id)
     {
-        //
+        $bill = Bills::findOrFail($id);
+        return view('admin.bills.show', ['bill' => $bill]);
     }
 
     /**

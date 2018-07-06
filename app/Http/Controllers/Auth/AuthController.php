@@ -70,8 +70,6 @@ class AuthController extends Controller
 
             // Support md5 passwords
             $user = User::where('username', $request->username)->first();
-            \Log::info($user->password );
-            \Log::info(md5($request->password));
             if( $user instanceof User && $user->password == md5($request->password) ) {
                 Auth::login($user);
             }

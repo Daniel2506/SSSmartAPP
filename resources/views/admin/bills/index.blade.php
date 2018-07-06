@@ -5,7 +5,7 @@
 @stop
 
 @section('module')
-	<div class="box box-success" id="bills-main">
+	<div class="box box-danger" id="bills-main">
 		<div class="box-body table-responsive">
 			<table id="bills-search-table" class="table table-bordered table-striped" cellspacing="0" width="100%">
 		        <thead>

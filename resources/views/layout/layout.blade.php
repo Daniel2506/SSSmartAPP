@@ -7,7 +7,7 @@
     <head>
         <meta charset="UTF-8">
         <title>{{ config('koi.app.name') }} :: @yield('title')</title>
-        <link rel="icon" type="image/png" href="{{ asset(config('koi.app.image.logo')) }}" />
+        <link rel="icon" type="image/png" href="{{ asset(config('koi.app.image.mlogo')) }}" />
 
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
 
@@ -26,7 +26,7 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
         <![endif]-->
     </head>
-    <body class="hold-transition skin-green-light sidebar-mini {{ Cookie::get('sidebar_toggle') }}">
+    <body class="hold-transition skin-red-light sidebar-mini {{ Cookie::get('sidebar_toggle') }}">
         <div class="wrapper">
 
             {{-- Main Header --}}

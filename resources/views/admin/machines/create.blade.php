@@ -6,7 +6,7 @@
 @stop
 
 @section('module')
-	<div class="box box-success" id="machine-create">
+	<div class="box box-danger" id="machine-create">
 		{!! Form::open(['id' => 'form-machine', 'data-toggle' => 'validator']) !!}
 			<div class="box-body" id="render-form-machine">
 				{{-- Render form machine --}}

@@ -7,7 +7,7 @@
     <head>
         <meta charset="UTF-8">
         <title>{{ config('koi.app.name') }} :: Login</title>
-        <link rel="icon" type="image/png" href="{{ asset(config('koi.app.image.logo')) }}" />
+        <link rel="icon" type="image/png" href="{{ asset(config('koi.app.image.mlogo')) }}" />
 
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
 
@@ -28,7 +28,7 @@
 	<body class="hold-transition login-page">
 		<div class="login-box">
 			<div class="login-logo">
-        		<b>{{ config('koi.app.name') }}</b>
+                <img src="{{ asset(config('koi.app.image.logo')) }}" alt="{{ config('koi.app.sitename') }}"/><br>
 			</div>
 
 			@if (count($errors) > 0)
@@ -53,7 +53,7 @@
 					</div>
 					<div class="row">
 						<div class="col-xs-offset-7 col-xs-5">
-							<button type="submit" class="btn btn-block btn-primary" style="vertical-align: middle">{{ trans('app.login') }}</button>
+							<button type="submit" class="btn btn-block btn-danger" style="vertical-align: middle">{{ trans('app.login') }}</button>
 						</div>
 					</div>
 				{!! Form::close() !!}

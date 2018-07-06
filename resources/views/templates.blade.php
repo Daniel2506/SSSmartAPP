@@ -53,7 +53,7 @@
     {!! Form::close() !!}
     <% if(!_.isUndefined(username) && !_.isNull(username) && username != '') { %>
         <div class=" col-sm-8 col-md-offset-2">
-            <div class="box box-success">
+            <div class="box box-danger">
                 <div class="box-header with-border">
                     <h3 class="box-title">Roles de usuario</h3>
                 </div>
@@ -152,7 +152,7 @@
         </div>
         <div class="form-group col-sm-3">
             <label>Contraseña</label>
-            <input type="password" name="maquina_contraseña"  class="form-control input-sm" value="<%- maquina_contraseña %>" <%- _.isUndefined(id) && _.isNull(id) && id == '' ? "required" : "" %> >
+            <input type="password" name="maquina_contraseña"  class="form-control input-sm" value="<%- maquina_contraseña %>" <%- _.isUndefined(maquina_serie) && _.isNull(maquina_serie) && maquina_serie == '' ? "required" : "" %> >
         </div>
         <div class="form-group col-sm-3">
             <label>Directorio</label>

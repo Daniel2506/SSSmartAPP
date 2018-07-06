@@ -42,6 +42,11 @@ app || (app = {});
                         render: function ( data, type, full, row ) {
                             return '<a href="'+ window.Misc.urlFull( Route.route('facturas.show', {facturas: full.id }) )  +'">' + data + '</a>';
                         }
+                    },
+                    // Provisional...
+                    {
+                        targets: 2,
+                        visible: false
                     }
                 ]
 			});
