@@ -64,7 +64,7 @@
                             <div class="form-group col-md-7 col-xs-9">
                                 <select name="role_id" id="role_id" class="form-control select2-default" required>
                                     @foreach( App\Models\Base\Role::getRoles() as $key => $value)
-                                    <option value="{{ $key }}">{{ $value }}</option>
+                                        <option value="{{ $key }}">{{ $value }}</option>
                                     @endforeach
                                 </select>
                             </div>

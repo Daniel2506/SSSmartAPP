@@ -2,44 +2,52 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Foundation\Auth\ThrottlesLogins;
-use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use App\Http\Controllers\Controller;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 use App\Models\Base\User;
-use Validator;
-use Auth;
+use Validator, Auth;
 
-class AuthController extends Controller
+class LoginController extends Controller
 {
     /*
     |--------------------------------------------------------------------------
-    | Registration & Login Controller
+    | Login Controller
     |--------------------------------------------------------------------------
     |
-    | This controller handles the registration of new users, as well as the
-    | authentication of existing users. By default, this controller uses
-    | a simple trait to add these behaviors. Why don't you explore it?
+    | This controller handles authenticating users for the application and
+    | redirecting them to your home screen. The controller uses a trait
+    | to conveniently provide its functionality to your applications.
     |
     */
-    use AuthenticatesAndRegistersUsers, ThrottlesLogins;
-
-    protected $username = 'username';
-
-    protected $loginPath = '/login';
-
-    protected $redirectPath = '/';
-
+    use AuthenticatesUsers;
 
     /**
-     * Create a new authentication controller instance.
-     *
-     * @return void
-     */
+    * Where to redirect users after login.
+    *
+    * @var string
+    */
+    protected $redirectTo = '/';
+
+    /**
+    * Create a new controller instance.
+    *
+    * @return void
+    */
     public function __construct()
     {
-        $this->middleware('guest', ['except' => ['getLogout', 'integrate'] ]);
+        $this->middleware('guest', ['except' => ['logout', 'integrate'] ]);
+    }
+
+    /**
+    * Override the username method used to validate login
+    *
+    * @return string
+    */
+    public function username()
+    {
+        return 'username';
     }
 
     /**
@@ -51,43 +59,30 @@ class AuthController extends Controller
     public function postLogin(Request $request)
     {
         $this->validate($request, [
-            $this->loginUsername() => 'required', 'password' => 'required',
+            $this->username() => 'required', 'password' => 'required',
         ]);
 
         // If the class is using the ThrottlesLogins trait, we can automatically throttle
         // the login attempts for this application. We'll key this by the username and
         // the IP address of the client making these requests into this application.
-        $throttles = $this->isUsingThrottlesLoginsTrait();
-
-        if ($throttles && $this->hasTooManyLoginAttempts($request)) {
+        if ($this->hasTooManyLoginAttempts($request)) {
+            $this->fireLockoutEvent($request);
             return $this->sendLockoutResponse($request);
         }
-
-        $credentials = $this->getCredentials($request);
-        if (Auth::attempt($credentials, $request->has('remember'))) {
-            return $this->handleUserWasAuthenticated($request, $throttles);
+        if( $this->attemptLogin($request) ) {
+            return $this->sendLoginResponse($request);
         }else{
-
             // Support md5 passwords
             $user = User::where('username', $request->username)->first();
             if( $user instanceof User && $user->password == md5($request->password) ) {
                 Auth::login($user);
             }
         }
-
-
         // If the login attempt was unsuccessful we will increment the number of attempts
         // to login and redirect the user back to the login form. Of course, when this
         // user surpasses their maximum number of attempts they will get locked out.
-        if ($throttles) {
-            $this->incrementLoginAttempts($request);
-        }
-
-        return redirect($this->loginPath())
-            ->withInput($request->only($this->loginUsername(), 'remember'))
-            ->withErrors([
-                $this->loginUsername() => $this->getFailedLoginMessage(),
-            ]);
+        $this->incrementLoginAttempts($request);
+        return $this->sendFailedLoginResponse($request);
     }
 
     /**

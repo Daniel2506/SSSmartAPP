@@ -39,7 +39,7 @@ class PermisoRolController extends Controller
                 $query->where('role_id', $request->role_id);
                 $query->where('module_id', $module->id);
                 $query->orderBy('permission_id', 'asc');
-                $object->mpermissions = $query->lists('permission_id');
+                $object->mpermissions = $query->pluck('permission_id');
 
                 $data[] = $object;
             }

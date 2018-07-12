@@ -60,7 +60,7 @@ class Role extends EntrustRole
         return Cache::rememberForever( self::$key_cache , function() {
             $query = Role::query();
             $query->orderBy('display_name', 'asc');
-            $collection = $query->lists('display_name', 'roles.id');
+            $collection = $query->pluck('display_name', 'roles.id');
 
             $collection->prepend('', '');
             return $collection;

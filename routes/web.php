@@ -1,13 +1,12 @@
 <?php
-
 /*
 |--------------------------------------------------------------------------
-| Application Routes
+| Web Routes
 |--------------------------------------------------------------------------
 |
-| Here is where you can register all of the routes for an application.
-| It's a breeze. Simply tell Laravel the URIs it should respond to
-| and give it the controller to call when that URI is requested.
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
 |
 */
 
@@ -18,11 +17,11 @@
 */
 Route::group(['prefix' => 'auth'], function()
 {
-	Route::post('login', ['as' => 'auth.login', 'uses' => 'Auth\AuthController@postLogin']);
-	Route::get('logout', ['as' => 'auth.logout', 'uses' => 'Auth\AuthController@getLogout']);
-	Route::get('integrate', ['as' => 'auth.integrate', 'uses' => 'Auth\AuthController@integrate']);
+	Route::post('login', ['as' => 'auth.login', 'uses' => 'Auth\LoginController@postLogin']);
+	Route::get('logout', ['as' => 'auth.logout', 'uses' => 'Auth\LoginController@logout']);
+	Route::get('integrate', ['as' => 'auth.integrate', 'uses' => 'Auth\LoginController@integrate']);
 });
-Route::get('login', ['as' => 'login', 'uses' => 'Auth\AuthController@getLogin']);
+Route::get('login', ['as' => 'login', 'uses' => 'Auth\LoginController@showLoginForm']);
 
 /*
 |--------------------------------------------------------------------------

@@ -12,11 +12,9 @@ use Zizaco\Entrust\Traits\EntrustUserTrait;
 
 use Validator, Cache;
 
-class User extends Model implements AuthenticatableContract,
-                                    CanResetPasswordContract
+class User extends Model implements AuthenticatableContract,CanResetPasswordContract
 {
-    use Authenticatable, CanResetPassword;
-    use EntrustUserTrait;
+    use Authenticatable, CanResetPassword, EntrustUserTrait;
 
     /**
      * The database table used by the model.

@@ -32,32 +32,6 @@ return [
         12 => 'Diciembre'
     ],
 
-    'terceros' => [
-        'tipo' => [
-            'CC' => 'Cédula de Ciudadanía',
-            'TI' => 'Tarjeta de Identidad',
-            'CE' => 'Cédula de Extranjería',
-            'PA' => 'Pasaporte', 'NI' => 'Nit'
-        ],
-
-        'regimen' => [
-            1 => 'Simplificado',
-            2 => 'Común',
-            3 => 'Especial'
-        ],
-
-        'persona' => [
-            'N' => 'Natural',
-            'J' => 'Jurídica'
-        ],
-
-        'niif' => [
-            '1' => 'Plena',
-            '2' => 'Pymes',
-            '3' => 'Micro pymes'
-        ]
-    ],
-
     'direcciones' => [
         'alfabeto' => [
             'A' => 'A', 'B' => 'B', 'C' => 'C', 'D' => 'D', 'E' => 'E', 'F' => 'F', 'G' => 'G', 'H' => 'H', 'I' => 'I',
@@ -170,52 +144,7 @@ return [
             '-' => '-'
         ]
     ],
-
-    'contabilidad' => [
-        'plancuentas' => [
-            'naturaleza' => [
-                'D' => 'Débito',
-                'C' => 'Crédito'
-            ],
-            'tipo' => [
-                'N' => 'Ninguno',
-                'I' => 'Inventario',
-                'C' => 'Cartera',
-                'P' => 'Cuentas por pagar'
-            ],
-            'niveles' => [
-                '1' => 'Uno',
-                '2' => 'Dos',
-                '3' => 'Tres',
-                '4' => 'Cuatro',
-                '5' => 'Cinco',
-                '6' => 'Seis',
-                '7' => 'Siete',
-                '8' => 'Ocho'
-            ]
-        ],
-
-        'centrocosto' => [
-            'tipo' => [
-                'N' => 'Ninguno',
-                'O' => 'Orden',
-                'I' => 'Inventario'
-            ]
-        ],
-
-        'documento' => [
-            'consecutivo' => [
-                'A' => 'Automático',
-                'M' => 'Manual'
-            ]
-        ],
-
-        'iva' => [
-            '16' => '16%',
-            '19' => '19%'
-        ]
-    ],
     'template' => [
-        'bg' => 'bg-green'
+        'bg' => 'bg-blue'
     ],
 ];

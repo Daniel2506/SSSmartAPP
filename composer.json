@@ -5,9 +5,9 @@
     "license": "MIT",
     "type": "project",
     "require": {
-        "php": ">=5.5.9",
-        "laravel/framework": "5.1.*",
-        "laravelcollective/html": "5.1.*",
+        "php": ">=7.0.0",
+        "laravel/framework": "5.5.*",
+        "laravelcollective/html": "^5.4.0",
         "lord/laroute" : "2.*",
         "yajra/laravel-datatables-oracle": "^6.8",
         "zizaco/entrust": "5.2.x-dev"
@@ -15,7 +15,10 @@
     "require-dev": {
         "fzaninotto/faker": "~1.4",
         "mockery/mockery": "0.9.*",
-        "phpunit/phpunit": "~4.0",
+        "symfony/dom-crawler": "~3.1",
+        "symfony/css-selector": "~3.1",
+        "phpunit/phpunit": "~6.0",
+        "filp/whoops": "~2.0",
         "phpspec/phpspec": "~2.1"
     },
     "autoload": {
@@ -31,6 +34,12 @@
             "tests/TestCase.php"
         ]
     },
+    "extra": {
+        "laravel": {
+            "dont-discover": [
+            ]
+        }
+    },
     "scripts": {
         "post-root-package-install": [
             "php -r \"copy('.env.example', '.env');\""
@@ -45,6 +54,10 @@
         "post-update-cmd": [
             "Illuminate\\Foundation\\ComposerScripts::postUpdate",
             "php artisan optimize"
+        ],
+        "post-autoload-dump": [
+            "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
+            "@php artisan package:discover"
         ]
     },
     "config": {
