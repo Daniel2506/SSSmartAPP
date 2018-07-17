@@ -4,7 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Models\Base\Bills;
-use Storage, Log, DB;
+use Log, DB;
 
 class Facturas extends Command
 {
@@ -40,33 +40,69 @@ class Facturas extends Command
     public function handle()
     {
         Log::info('Iniciando rutina facturas:import');
-        $path = "storage/app/plano201873.txt";
+
+        // Establecer una conexión básica
+        $connection = ftp_connect(config('koi.ftp.host'));
+
+        // Iniciar sesión con nombre de usuario y contraseña
+        ftp_login($connection, config('koi.ftp.user'), config('koi.ftp.password'));
+
+        // Contenedor de archivos
+        $paths = [];
+
+        $directories = DB::table('maquinas')->select('maquina_directorio')->get();
+        foreach ($directories as $directory) {
+            $paths = array_merge($paths, ftp_nlist($connection, $directory->maquina_directorio));
+        }
+
         DB::beginTransaction();
         try {
-            foreach (file($path) as $line) {
-                list($numero, $prefijo, $f_emision, $f_inicio, $f_final, $casilla, $subtotal, $p_iva, $iva, $total, $pago, $cambio, $time) = explode('|', $line);
-                $bill = new Bills;
-                $bill->factura_numero =  $numero;
-                $bill->factura_prefijo = $prefijo;
-                $bill->factura_fecha_emision = $f_emision;
-                $bill->factura_fh_inicio = $f_inicio;
-                $bill->factura_fh_final = $f_final;
-                $bill->factura_casilla = $casilla;
-                $bill->factura_subtotal = $subtotal;
-                $bill->factura_iva_p = $p_iva;
-                $bill->factura_iva = $iva;
-                $bill->factura_total = $total;
-                $bill->factura_pago = $pago;
-                $bill->factura_cambio = $cambio;
-                $bill->factura_tiempo = $time;
-                $bill->save();
-                Log::info($bill->factura_fh_final);
+            foreach ($paths as $path) {
+
+                $handle = 'file.txt';
+
+                $file = ftp_get($connection, $handle, $path, FTP_ASCII, 0);
+
+                foreach (file($handle) as $line) {
+                    list($numero, $prefijo, $f_emision, $f_inicio, $f_final, $casilla, $subtotal, $p_iva, $iva, $total, $pago, $cambio, $time) = explode('|', $line);
+
+                    $bill = new Bills;
+                    $bill->factura_maquina =  1;
+                    $bill->factura_numero =  $numero;
+                    $bill->factura_prefijo = $prefijo;
+                    $bill->factura_fecha_emision = $this->setDate($f_emision);
+                    $bill->factura_fh_inicio = $this->setDate($f_inicio);
+                    $bill->factura_fh_final = $this->setDate($f_final);
+                    $bill->factura_casilla = $casilla;
+                    $bill->factura_subtotal = $subtotal;
+                    $bill->factura_iva_p = $p_iva;
+                    $bill->factura_iva = $iva;
+                    $bill->factura_total = $total;
+                    $bill->factura_pago = $pago;
+                    $bill->factura_cambio = $cambio;
+                    $bill->factura_tiempo = $time;
+                    $bill->save();
+                }
             }
-            DB::commit();
-            Log::info('Rutina Ok');
+
         } catch (\Exception $e) {
             DB::rollback();
             Log::error($e->getMessage());
+            return;
         }
+
+        DB::commit();
+        unlink('file.txt');
+        Log::info('Rutina Ok');
+    }
+    /**
+    * Set formating date apply save model
+    *
+    * @return date()
+    */
+    public function setDate($date, $dateTime = false)
+    {
+        $time = strtotime(str_replace('/','-', $date));
+        return date('Y-m-d H:m:s', $time);
     }
 }

@@ -1,5 +1,5 @@
 /**
-* Class AppRouter  of Backbone Router
+* Class UserLoginView  of Backbone Router
 * @author KOI || @dropecamargo
 * @link http://koi-ti.com
 */
@@ -17,8 +17,8 @@ app || (app = {});
         * Constructor Method
         */
         initialize : function() {
- 
-            //Init Attributes 
+
+            //Init Attributes
             this.$loginForm = $('#form-login-account');
             this.$loginForm.validator();
         },

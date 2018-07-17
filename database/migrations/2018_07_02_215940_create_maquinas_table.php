@@ -30,7 +30,7 @@ class CreateMaquinasTable extends Migration
             $table->string('maquina_directorio', 100);
             $table->dateTime('maquina_ultima');
 
-            $table->unique(['maquina_serie']);
+            $table->unique(['maquina_serie', 'maquina_directorio']);
         });
     }
 

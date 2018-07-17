@@ -14,11 +14,9 @@ app || (app = {});
             //Login
             'login(/)': 'getLogin',
 
-            /*
-            |-----------------------
-            | Administracion
-            |-----------------------
-            */
+            // Dashboard
+            '(/)': 'getDashboard',
+
             // Roles
             'roles(/)': 'getRolesMain',
             'roles/create(/)': 'getRolesCreate',
@@ -88,6 +86,18 @@ app || (app = {});
             Backbone.history.start( config );
         },
 
+        /**
+        * show view in Dashboard Event
+        */
+        getDashboard: function () {
+
+            if ( this.dashboardView instanceof Backbone.View ){
+                this.dashboardView.stopListening();
+                this.dashboardView.undelegateEvents();
+            }
+
+            this.dashboardView = new app.DashboardView( );
+        },
         /**
         * show view in Login Event
         */

@@ -30,6 +30,11 @@ Route::get('login', ['as' => 'login', 'uses' => 'Auth\LoginController@showLoginF
 */
 Route::group(['middleware' => 'auth'], function()
 {
+	Route::group(['prefix' => '/'], function()
+	{
+		Route::get('charts', ['as' => 'dashboard.charts', 'uses' => 'HomeController@charts']);
+	});
+
     Route::get('/', ['as' => 'dashboard', 'uses' => 'HomeController@index']);
 
 	/*
@@ -47,8 +52,6 @@ Route::group(['middleware' => 'auth'], function()
 	});
 
 	Route::resource('roles', 'Admin\RolController', ['except' => ['destroy']]);
-	Route::resource('permisos', 'Admin\PermisoController', ['only' => ['index']]);
-	Route::resource('modulos', 'Admin\ModuloController', ['only' => ['index']]);
 	Route::resource('usuarios', 'Admin\UserController', ['except' => ['destroy']]);
 	Route::resource('maquinas', 'Admin\MaquinaController', ['except' => ['destroy']]);
 	Route::resource('bitacoras', 'Admin\BitacoraController', ['except' => ['destroy']]);

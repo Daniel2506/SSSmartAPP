@@ -50,9 +50,9 @@ return [
 
         'ftp' => [
             'driver'   => 'ftp',
-            'host'     => 'ftp.example.com',
-            'username' => 'your-username',
-            'password' => 'your-password',
+            'host'     => '104.236.57.82',
+            'username' => 'cascos',
+            'password' => 'koiTIcascos',
 
             // Optional FTP Settings...
             // 'port'     => 21,

@@ -40,7 +40,6 @@ elixir(function(mix) {
         paths.libs + 'jquery-ui/ui/core.js',
         paths.libs + 'jquery-ui/ui/widget.js',
         paths.libs + 'jquery-ui/ui/spinner.js',
-        paths.libs + 'js-shortid/dist/js-shortid.js',
         paths.adminlte + 'bootstrap/js/bootstrap.min.js',
         paths.adminlte + 'dist/js/app.min.js',
         paths.adminlte + 'plugins/slimScroll/jquery.slimscroll.min.js',
@@ -63,6 +62,7 @@ elixir(function(mix) {
         paths.libs + 'moment/moment.js',
         paths.libs + 'moment/locale/es.js',
         paths.libs + 'alertify.js/dist/js/alertify.js',
+        paths.libs + 'chart.js/dist/Chart.min.js',
    	], 'public/js/vendor.min.js')
     .scripts([
         'models/*.js',

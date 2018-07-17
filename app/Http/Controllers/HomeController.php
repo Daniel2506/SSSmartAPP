@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use DB;
 
 class HomeController extends Controller
 {
@@ -20,68 +21,39 @@ class HomeController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
      * Display the specified resource.
      *
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function charts(Request $request)
     {
-        //
-    }
+        if ($request->ajax()) {
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
+            // Init global object
+            $object = new \stdClass();
+            $object->success = true;
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
+            // Rotacion X dia
+            $rotacion_dia = new \stdClass();
+            $rotacion_dia->labels = [];
+            $rotacion_dia->data = [];
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+            // Prepare query
+            $sql = "
+                SELECT (COUNT(f.id) / m.maquina_casillas) as result, DATE_FORMAT(f.factura_fecha_emision, '%w') AS day, DATE_FORMAT(f.factura_fecha_emision, '%W') AS day_letters
+                FROM facturas as f, maquinas as m
+                GROUP BY day";
+
+            // Execute sql
+            $query = DB::select($sql);
+
+            // Config chart
+            $rotacion_dia->labels = array_pluck($query, 'day_letters');
+            $rotacion_dia->data = array_pluck($query, 'result');
+
+            // Prepare global object
+            $object->chart_rotacion_dia = $rotacion_dia;
+            return response()->json($object);
+        }
     }
 }
