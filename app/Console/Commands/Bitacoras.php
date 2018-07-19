@@ -3,17 +3,17 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use App\Models\Base\Bills;
+use App\Models\Base\Binnacle;
 use Log, DB;
 
-class Facturas extends Command
+class Bitacoras extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'facturas:import';
+    protected $signature = 'bitacoras:import';
 
     /**
      * The console command description.
@@ -39,7 +39,7 @@ class Facturas extends Command
      */
     public function handle()
     {
-        Log::info('Iniciando rutina facturas:import');
+        Log::info('Iniciando rutina bitacoras:import');
 
         // Establecer una conexión básica
         $connection = ftp_connect(config('koi.ftp.host'));
@@ -54,36 +54,30 @@ class Facturas extends Command
         foreach ($directories as $directory) {
             $paths = array_merge($paths, ftp_nlist($connection, $directory->maquina_directorio));
         }
+
         DB::beginTransaction();
         try {
             foreach ($paths as $path) {
 
                 list($directory, $name) = explode('/', $path);
 
-                // Valido que archivo se de factura ('Fplano...txt')
-                if (substr($name, 0, 1) === 'F') {
+                // Valido que archivo se de bitacora ('Bplano...txt')
+                if (substr($name, 0, 1) === 'B') {
                     $handle = 'file.txt';
+
                     $file = ftp_get($connection, $handle, $path, FTP_ASCII, 0);
 
                     foreach (file($handle) as $line) {
-                        list($numero, $prefijo, $f_emision, $f_inicio, $f_final, $casilla, $subtotal, $p_iva, $iva, $total, $pago, $cambio, $time) = explode('|', $line);
+                        list($user, $fecha_hora, $action, $value1, $value2, $observation) = explode('~', $line);
 
-                        $bill = new Bills;
-                        $bill->factura_maquina =  1;
-                        $bill->factura_numero =  $numero;
-                        $bill->factura_prefijo = $prefijo;
-                        $bill->factura_fecha_emision = $this->setDate($f_emision);
-                        $bill->factura_fh_inicio = $this->setDate($f_inicio);
-                        $bill->factura_fh_final = $this->setDate($f_final);
-                        $bill->factura_casilla = $casilla;
-                        $bill->factura_subtotal = $subtotal;
-                        $bill->factura_iva_p = $p_iva;
-                        $bill->factura_iva = $iva;
-                        $bill->factura_total = $total;
-                        $bill->factura_pago = $pago;
-                        $bill->factura_cambio = $cambio;
-                        $bill->factura_tiempo = $time;
-                        $bill->save();
+                        $bitacora = new Binnacle;
+                        $bitacora->bitacora_usuario = $user;
+                        $bitacora->bitacora_accion = $action;
+                        $bitacora->bitacora_valor1 = $value1;
+                        $bitacora->bitacora_valor2 = $value2;
+                        $bitacora->bitacora_observaciones = $observation;
+                        $bitacora->bitacora_fh = $this->setDate($fecha_hora);
+                        $bitacora->save();
                     }
                     unlink('file.txt');
                 }
@@ -98,6 +92,7 @@ class Facturas extends Command
         ftp_close ($connection);
         Log::info('Rutina Ok');
     }
+
     /**
     * Set formating date apply save model
     *

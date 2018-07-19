@@ -50,6 +50,7 @@ app || (app = {});
 
                     // Render
                     _this.chart_rotacion_dia(resp.chart_rotacion_dia);
+                    _this.chart_rotacion_smeses(resp.chart_rotacion_smeses);
                 }
             })
             .fail(function(jqXHR, ajaxOptions, thrownError) {
@@ -62,13 +63,55 @@ app || (app = {});
         *
         */
         chart_rotacion_dia : function(config){
-            var ctx     = this.$('#barChart').get(0).getContext('2d');
+            var ctx     = this.$('#chart_rotacion_dia').get(0).getContext('2d');
             var myChart = new Chart(ctx, {
                 type: 'bar',
                 data: {
                     labels: config.labels,
                     datasets: [{
-                        label: '# of Votes',
+                        label: '# Rotación',
+                        data: config.data,
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 206, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(255, 159, 64, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(255,99,132,1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero:true
+                            }
+                        }]
+                    }
+                }
+            });
+        },
+        /**
+        *
+        */
+        chart_rotacion_smeses : function(config){
+            var ctx     = this.$('#chart_rotacion_smeses').get(0).getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: config.labels,
+                    datasets: [{
+                        label: '# Rotación',
                         data: config.data,
                         backgroundColor: [
                             'rgba(255, 99, 132, 0.2)',

@@ -29,6 +29,9 @@ class CreateMaquinasTable extends Migration
             $table->string('maquina_contraseña', 100);
             $table->string('maquina_directorio', 100);
             $table->dateTime('maquina_ultima');
+            $table->double('maquina_comision1')->comment('centro comercial');
+            $table->double('maquina_comision2')->comment('parqueaderos');
+            $table->double('maquina_comision3')->comment('empresa');
 
             $table->unique(['maquina_serie', 'maquina_directorio']);
         });

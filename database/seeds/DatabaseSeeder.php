@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
         $this->call(PermissionTableSeeder::class);
         $this->call(RoleTableSeeder::class);
         $this->call(UserRolTableSeeder::class);
-        $this->call(MaquinaSeeder::class);
+        $this->call(MaquinaTableSeeder::class);
 
         Model::reguard();
     }

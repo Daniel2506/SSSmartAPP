@@ -3,7 +3,7 @@
 use Illuminate\Database\Seeder;
 use App\Models\Base\Machine;
 
-class MaquinaSeeder extends Seeder
+class MaquinaTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -25,7 +25,10 @@ class MaquinaSeeder extends Seeder
             'maquina_usuario' => 'user000',
             'maquina_contraseña' => 'pass000',
             'maquina_directorio' => 'test',
-            'maquina_ultima' => date('Y-m-d H:m:s')
+            'maquina_ultima' => date('Y-m-d H:m:s'),
+            'maquina_comision1' => 10,
+            'maquina_comision2' => 15,
+            'maquina_comision3' => 20
     	]);
     }
 }

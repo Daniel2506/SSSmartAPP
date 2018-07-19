@@ -46,6 +46,20 @@
             </div>
             <div class="row">
                 <div class="form-group col-sm-3">
+                    <label class="control-label">Comisión 1</label>
+                    <div>{{$machine->maquina_comision1}} %</div>
+                </div>
+                <div class="form-group col-sm-3">
+                    <label class="control-label">Comisión 2</label>
+                    <div>{{$machine->maquina_comision2}} %</div>
+                </div>
+                <div class="form-group col-sm-3">
+                    <label class="control-label">Comisión 3</label>
+                    <div>{{$machine->maquina_comision3}} %</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-sm-3">
                     <label class="control-label">Servidor</label>
                     <div>{{$machine->maquina_servidor}}</div>
                 </div>
