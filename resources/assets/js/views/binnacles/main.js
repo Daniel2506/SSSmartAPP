@@ -34,7 +34,7 @@ app || (app = {});
                     { data: 'bitacora_usuario', name: 'bitacora_usuario'},
                     { data: 'bitacora_accion', name: 'bitacora_accion'},
                     { data: 'bitacora_observaciones', name: 'bitacora_observaciones'},
-                    { data: 'bitacora_fecha', name: 'bitacora_fecha' }
+                    { data: 'bitacora_fh', name: 'bitacora_fh' }
                 ],
                 columnDefs: [
                     {

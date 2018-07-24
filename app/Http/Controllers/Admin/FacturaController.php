@@ -21,6 +21,7 @@ class FacturaController extends Controller
     {
         if ($request->ajax()) {
             $query = Bills::query();
+            $query->orderBy('factura_fecha_emision', 'desc');
             return Datatables::of($query)->make(true);
         }
         return view('admin.bills.index');

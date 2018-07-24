@@ -19,7 +19,6 @@ app || (app = {});
         initialize : function() {
 
             this.$rolesSearchTable = this.$('#roles-search-table');
-            var paginacion = this.$rolesSearchTable.data('paginacion');
 
             this.$rolesSearchTable.DataTable({
                 dom: "<'row'<'col-sm-4'B><'col-sm-4 text-center'l><'col-sm-4'f>>" +
@@ -29,8 +28,6 @@ app || (app = {});
                 serverSide: true,
                 language: window.Misc.dataTableES(),
                 ajax: window.Misc.urlFull( Route.route('roles.index') ),
-                pageLength: paginacion,
-                lengthMenu: [[paginacion, 10, 25, 50, 100], [paginacion, 10, 25, 50, 100]],
                 columns: [
                     { data: 'display_name', name: 'display_name' },
                     { data: 'name', name: 'name' },

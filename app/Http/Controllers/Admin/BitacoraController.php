@@ -20,6 +20,7 @@ class BitacoraController extends Controller
     {
         if ($request->ajax()) {
             $query = Binnacle::query();
+            $query->orderBy('bitacora_fh', 'desc');
             return Datatables::of($query)->make(true);
         }
         return view('admin.binnacles.index');
@@ -54,7 +55,8 @@ class BitacoraController extends Controller
      */
     public function show($id)
     {
-        //
+        $binnacle = Binnacle::findOrFail($id);
+        return view('admin.binnacles.show', ['binnacle' => $binnacle]);
     }
 
     /**

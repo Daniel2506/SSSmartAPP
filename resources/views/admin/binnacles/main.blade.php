@@ -1,11 +1,11 @@
 @extends('layout.layout')
 
-@section('title') Bitacoras @stop
+@section('title') Bitácoras @stop
 
 @section('content')
     <section class="content-header">
         <h1>
-			Bitacoras <small>Administración de bitacoras</small>
+			Bitácoras <small>Administración de bitácoras</small>
         </h1>
         <ol class="breadcrumb">
 			<li><a href="{{ route('dashboard') }}"><i class="fa fa-dashboard"></i> {{ trans('app.home') }}</a></li>

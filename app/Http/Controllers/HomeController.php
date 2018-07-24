@@ -43,10 +43,9 @@ class HomeController extends Controller
             $rotacion_dia->data = [];
 
             // Prepare query
-            /* Nota: DATE_SUB('2018-06-27', INTERVAL 8 DAY) Cambiar por DATE(NOW())*/
             $sql = "
                 SELECT (COUNT(f.id) / m.maquina_casillas) as result, DATE_FORMAT(f.factura_fecha_emision, '%w') AS day, DATE_FORMAT(f.factura_fecha_emision, '%W') AS day_letters
-                FROM facturas as f, maquinas as m WHERE f.factura_fecha_emision > DATE_SUB('2018-06-27', INTERVAL 8 DAY) AND f.factura_fecha_emision <= DATE(NOW())
+                FROM facturas as f, maquinas as m WHERE f.factura_fecha_emision > DATE_SUB(DATE(NOW()), INTERVAL 8 DAY) AND f.factura_fecha_emision <= DATE(NOW())
                 GROUP BY f.factura_fecha_emision ORDER BY DATE_FORMAT(DATE(NOW()), '%w')";
 
             // Execute sql

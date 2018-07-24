@@ -30,9 +30,8 @@ Route::get('login', ['as' => 'login', 'uses' => 'Auth\LoginController@showLoginF
 */
 Route::group(['middleware' => 'auth'], function()
 {
-	Route::group(['prefix' => '/'], function()
-	{
-		Route::get('charts', ['as' => 'dashboard.charts', 'uses' => 'HomeController@charts']);
+	Route::prefix('/')->name('dashboard.charts')->group(function () {
+		Route::get('charts', 'HomeController@charts');
 	});
 
     Route::get('/', ['as' => 'dashboard', 'uses' => 'HomeController@index']);
@@ -42,12 +41,12 @@ Route::group(['middleware' => 'auth'], function()
 	| Admin Routes
 	|-------------------------
 	*/
-	Route::group(['prefix' => 'usuarios'], function()
-	{
+
+	Route::prefix('usuarios')->name('usuarios.')->group(function()	{
 		Route::resource('roles', 'Admin\UsuarioRolController', ['only' => ['index', 'store', 'destroy']]);
 	});
-	Route::group(['prefix' => 'roles'], function()
-	{
+
+	Route::prefix('roles')->name('roles.')->group(function () {
 		Route::resource('permisos', 'Admin\PermisoRolController', ['only' => ['index', 'update', 'destroy']]);
 	});
 

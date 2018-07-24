@@ -4,7 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Models\Base\Bills;
-use Log, DB;
+use Log, DB, Storage;
 
 class Facturas extends Command
 {
@@ -68,24 +68,28 @@ class Facturas extends Command
                     foreach (file($handle) as $line) {
                         list($numero, $prefijo, $f_emision, $f_inicio, $f_final, $casilla, $subtotal, $p_iva, $iva, $total, $pago, $cambio, $time) = explode('|', $line);
 
-                        $bill = new Bills;
-                        $bill->factura_maquina =  1;
-                        $bill->factura_numero =  $numero;
-                        $bill->factura_prefijo = $prefijo;
-                        $bill->factura_fecha_emision = $this->setDate($f_emision);
-                        $bill->factura_fh_inicio = $this->setDate($f_inicio);
-                        $bill->factura_fh_final = $this->setDate($f_final);
-                        $bill->factura_casilla = $casilla;
-                        $bill->factura_subtotal = $subtotal;
-                        $bill->factura_iva_p = $p_iva;
-                        $bill->factura_iva = $iva;
-                        $bill->factura_total = $total;
-                        $bill->factura_pago = $pago;
-                        $bill->factura_cambio = $cambio;
-                        $bill->factura_tiempo = $time;
-                        $bill->save();
+                        $exist = Bills::where('factura_numero', $numero)->where('factura_prefijo', $prefijo)->first();
+                        if (!$exist instanceof Bills) {
+                            $bill = new Bills;
+                            $bill->factura_maquina =  1;
+                            $bill->factura_numero =  $numero;
+                            $bill->factura_prefijo = $prefijo;
+                            $bill->factura_fecha_emision = $this->setDate($f_emision);
+                            $bill->factura_fh_inicio = $this->setDate($f_inicio);
+                            $bill->factura_fh_final = $this->setDate($f_final);
+                            $bill->factura_casilla = $casilla;
+                            $bill->factura_subtotal = $subtotal;
+                            $bill->factura_iva_p = $p_iva;
+                            $bill->factura_iva = $iva;
+                            $bill->factura_total = $total;
+                            $bill->factura_pago = $pago;
+                            $bill->factura_cambio = $cambio;
+                            $bill->factura_tiempo = $time;
+                            $bill->save();
+                        }
                     }
                     unlink('file.txt');
+                    ftp_delete($connection, $path);
                 }
             }
             DB::commit();

@@ -69,17 +69,20 @@ class Bitacoras extends Command
 
                     foreach (file($handle) as $line) {
                         list($user, $fecha_hora, $action, $value1, $value2, $observation) = explode('~', $line);
-
-                        $bitacora = new Binnacle;
-                        $bitacora->bitacora_usuario = $user;
-                        $bitacora->bitacora_accion = $action;
-                        $bitacora->bitacora_valor1 = $value1;
-                        $bitacora->bitacora_valor2 = $value2;
-                        $bitacora->bitacora_observaciones = $observation;
-                        $bitacora->bitacora_fh = $this->setDate($fecha_hora);
-                        $bitacora->save();
+                        $exist = Binnacle::where('bitacora_fh', $fecha_hora)->first();
+                        if (!$exist instanceof Binnacle) {
+                            $bitacora = new Binnacle;
+                            $bitacora->bitacora_usuario = $user;
+                            $bitacora->bitacora_accion = $action;
+                            $bitacora->bitacora_valor1 = $value1;
+                            $bitacora->bitacora_valor2 = $value2;
+                            $bitacora->bitacora_observaciones = $observation;
+                            $bitacora->bitacora_fh = $this->setDate($fecha_hora);
+                            $bitacora->save();
+                        }
                     }
                     unlink('file.txt');
+                    ftp_delete($connection, $path);
                 }
             }
             DB::commit();

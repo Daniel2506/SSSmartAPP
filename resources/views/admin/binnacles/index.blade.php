@@ -1,7 +1,7 @@
 @extends('admin.binnacles.main')
 
 @section('breadcrumb')
-    <li class="active">Bitacoras</li>
+    <li class="active">Bitácoras</li>
 @stop
 
 @section('module')
@@ -13,8 +13,8 @@
 		                <th width="5%">#</th>
 		                <th width="20%">Usuario</th>
                         <th width="20%">Acción</th>
-		                <th width="45%">Observaciones</th>
-		                <th width="10%">Fecha</th>
+		                <th width="40%">Observaciones</th>
+		                <th width="15%">Fecha</th>
 		            </tr>
 		        </thead>
 		    </table>

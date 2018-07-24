@@ -53,7 +53,7 @@
     {!! Form::close() !!}
     <% if(!_.isUndefined(username) && !_.isNull(username) && username != '') { %>
         <div class=" col-sm-8 col-md-offset-2">
-            <div class="box box-danger">
+            <div class="box box-success">
                 <div class="box-header with-border">
                     <h3 class="box-title">Roles de usuario</h3>
                 </div>

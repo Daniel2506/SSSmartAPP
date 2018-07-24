@@ -40,7 +40,7 @@ class PutFilesCommand extends Command
     {
         foreach (Storage::files('test') as $path) {
             $file = Storage::get($path);
-            Storage::disk('ftp')->put($path, $file);
+            Storage::disk('ftp')->copy($path, $file);
         }
     }
 }
