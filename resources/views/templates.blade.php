@@ -3,10 +3,11 @@
 
         <div class="row">
             <div class="form-group col-sm-4">
-                <label>Nombre competo</label>
-                <input type="text" name="user_name"  class="form-control input-sm input-toupper" placeholder="Nombre"value="<%- user_name %>" required>
+                <label>Nombres</label>
+                <input type="text" name="user_name"  class="form-control input-sm input-toupper" placeholder="Nombres" value="<%- user_name %>" required>
             </div>
-            <div class="form-group col-sm-4"> <br>
+            <div class="form-group col-sm-4">
+                <label>Apellidos</label>
                 <input type="text" name="user_lastname"  class="form-control input-sm input-toupper" placeholder="Apellidos"value="<%- user_lastname %>" required>
             </div>
             <div class="form-group col-sm-4">

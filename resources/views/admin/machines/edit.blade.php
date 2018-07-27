@@ -4,7 +4,7 @@
 	<li><a href="{{ route('maquinas.index') }}">Máquinas</a></li>
     <li><a href="{{ route('maquinas.show', ['maquinas' => $machine->id]) }}">{{ $machine->id }}</a></li>
     <li class="active">Editar</li>
-@stop
+@endsection
 @section('module')
     @include('admin.machines.create')
-@stop
+@endsection

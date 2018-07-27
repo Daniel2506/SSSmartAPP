@@ -1,6 +1,6 @@
 @extends('layout.layout')
 
-@section('title') Máquinas @stop
+@section('title') Máquinas @endsection
 
 @section('content')
     <section class="content-header">
@@ -16,4 +16,4 @@
     <section class="content">
         @yield('module')
     </section>
-@stop
+@endsection

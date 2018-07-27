@@ -29,15 +29,5 @@ return [
     'clear' => 'Limpiar',
 
     'pdf' => 'Generar PDF',
-    'xls' => 'Generar XLS',
-
-	'import' => [
-		'xls' => 'Importar XLS',
-	],
-
-    'files' => [
-        'upload' => 'Seleccionar archivo',
-        'drop' => 'Suelta los archivos aquí',
-        'retry' => 'Volver a intentar'
-    ]
+    'xls' => 'Generar XLS'
 ];

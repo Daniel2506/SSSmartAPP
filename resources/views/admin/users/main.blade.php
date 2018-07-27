@@ -1,6 +1,6 @@
 @extends('layout.layout')
 
-@section('title') Usuarios @stop
+@section('title') Usuarios @endsection
 
 @section('content')
     <section class="content-header">
@@ -16,4 +16,4 @@
     <section class="content">
         @yield('module')
     </section>
-@stop
+@endsection

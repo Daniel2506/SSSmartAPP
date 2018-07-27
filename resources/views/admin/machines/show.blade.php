@@ -3,7 +3,7 @@
 @section('breadcrumb')
     <li><a href="{{route('maquinas.index')}}">Máquina</a></li>
     <li class="active">{{ $machine->id }}</li>
-@stop
+@endsection
 
 @section('module')
     <div class="box box-danger">
@@ -84,4 +84,4 @@
             </div>
         </div>
     </div>
-@stop
+@endsection

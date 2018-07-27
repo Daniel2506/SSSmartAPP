@@ -2,4 +2,4 @@
 
 @section('module')
 	<div id="rol-create"></div>
-@stop
+@endsection

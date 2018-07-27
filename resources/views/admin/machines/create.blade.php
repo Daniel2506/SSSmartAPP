@@ -3,7 +3,7 @@
 @section('breadcrumb')
     <li><a href="{{ route('maquinas.index')}}">Máquina</a></li>
 	<li class="active">Nuevo</li>
-@stop
+@endsection
 
 @section('module')
 	<div class="box box-danger" id="machine-create">
@@ -24,4 +24,4 @@
 			</div>
 		{!! Form::close() !!}
 	</div>
-@stop
+@endsection

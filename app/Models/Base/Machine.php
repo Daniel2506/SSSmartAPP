@@ -4,6 +4,7 @@ namespace App\Models\Base;
 
 use Illuminate\Database\Eloquent\Model;
 use Validator;
+
 class Machine extends Model
 {
     /**
@@ -47,5 +48,10 @@ class Machine extends Model
         }
         $this->errors = $validator->errors();
         return false;
+    }
+
+    public static function getMachines()
+    {
+        return Machine::get()->pluck('maquina_serie', 'id');
     }
 }

@@ -224,7 +224,8 @@ var app = app || {};
         initTimePicker: function () {
             $(".timepicker").timepicker({
                 showInputs: false,
-                showMeridian: false
+                showMeridian: false,
+                minuteStep: 1,
             });
         },
     };

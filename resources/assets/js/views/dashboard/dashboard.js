@@ -21,7 +21,7 @@ app || (app = {});
         },
 
         /**
-        *
+        * Reference view charts
         */
         referenceCharts : function(){
 
@@ -51,6 +51,7 @@ app || (app = {});
                     // Render
                     _this.chart_rotacion_dia(resp.chart_rotacion_dia);
                     _this.chart_rotacion_smeses(resp.chart_rotacion_smeses);
+                    _this.chart_comisones_maquinas(resp.chart_comisones_maquinas);
                 }
             })
             .fail(function(jqXHR, ajaxOptions, thrownError) {
@@ -60,7 +61,7 @@ app || (app = {});
         },
 
         /**
-        *
+        * Render view Chart rotacion X dia
         */
         chart_rotacion_dia : function(config){
             var ctx     = this.$('#chart_rotacion_dia').get(0).getContext('2d');
@@ -91,6 +92,8 @@ app || (app = {});
                     }]
                 },
                 options: {
+                    responsive: true,
+                    legend: { display: false },
                     scales: {
                         yAxes: [{
                             ticks: {
@@ -102,7 +105,7 @@ app || (app = {});
             });
         },
         /**
-        *
+        * Render view Chart rotacion ultimos seis meses
         */
         chart_rotacion_smeses : function(config){
             var ctx     = this.$('#chart_rotacion_smeses').get(0).getContext('2d');
@@ -133,6 +136,51 @@ app || (app = {});
                     }]
                 },
                 options: {
+                    responsive: true,
+                    legend: { display: false },
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero:true
+                            }
+                        }]
+                    }
+                }
+            });
+        },
+        /**
+        * Render view Chart comisiones maquinas
+        */
+        chart_comisones_maquinas : function(config){
+            var ctx     = this.$('#chart_comisiones_maquinas').get(0).getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: config.labels,
+                    datasets: [{
+                        label: 'Comisión ' + config.placeholder.barra1 + ' %',
+                        data: config.data.comision1,
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Comisión ' + config.placeholder.barra2 + ' %',
+                        data: config.data.comision2,
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Comisión ' + config.placeholder.barra3 + ' %',
+                        data: config.data.comision3,
+                        backgroundColor: 'rgba(255, 206, 86, 0.2)',
+                        borderColor: 'rgba(255, 206, 86, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
                     scales: {
                         yAxes: [{
                             ticks: {

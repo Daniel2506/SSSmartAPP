@@ -16,4 +16,4 @@
     <section class="content">
         @yield('module')
     </section>
-@stop
+@endsection

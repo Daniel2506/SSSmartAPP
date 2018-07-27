@@ -2,7 +2,7 @@
 
 @section('breadcrumb')
     <li class="active">Máquinas</li>
-@stop
+@endsection
 
 @section('module')
 	<div class="box box-danger" id="machines-main">
@@ -20,4 +20,4 @@
 		    </table>
 		</div>
 	</div>
-@stop
+@endsection

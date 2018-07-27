@@ -71,6 +71,7 @@ app || (app = {});
         initialize : function ( opts ){
             // Initialize resources
             this.componentGlobalView = new app.ComponentGlobalView();
+            this.componentReportView = new app.ComponentReportView();
       	},
 
         /**

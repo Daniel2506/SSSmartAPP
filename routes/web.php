@@ -55,4 +55,11 @@ Route::group(['middleware' => 'auth'], function()
 	Route::resource('maquinas', 'Admin\MaquinaController', ['except' => ['destroy']]);
 	Route::resource('bitacoras', 'Admin\BitacoraController', ['except' => ['destroy']]);
 	Route::resource('facturas', 'Admin\FacturaController', ['except' => ['destroy']]);
+
+	/*
+	|-------------------------
+	| Reports Routes
+	|-------------------------
+	*/
+	Route::resource('resumengeneral', 'Report\ResumenGeneralController', ['only' => ['index']]);
 });

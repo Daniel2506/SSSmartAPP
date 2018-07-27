@@ -1,6 +1,6 @@
 @extends('layout.layout')
 
-@section('title') Roles @stop
+@section('title') Roles @endsection
 
 @section('content')
     @yield ('module')
@@ -140,4 +140,4 @@
             </table>
         </div>
     </script>
-@stop
+@endsection

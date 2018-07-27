@@ -3,7 +3,7 @@
 @section('breadcrumb')
     <li><a href="{{route('usuarios.index')}}">Usuario</a></li>
     <li class="active">{{ $user->id }}</li>
-@stop
+@endsection
 
 @section('module')
     <div class="box box-danger" id="user-show">
@@ -73,4 +73,4 @@
 
 
     </div>
-@stop
+@endsection

@@ -2,7 +2,7 @@
 
 @section('breadcrumb')
     <li class="active">Usuarios</li>
-@stop
+@endsection
 
 @section('module')
 	<div class="box box-danger" id="users-main">
@@ -19,4 +19,4 @@
 		    </table>
 		</div>
 	</div>
-@stop
+@endsection

@@ -13,7 +13,7 @@ return [
     | any other location as required by the application or its packages.
     */
     'name' => 'SS&SmartAPP',
-    
+
     /*
     |--------------------------------------------------------------------------
     | Application Debug Mode
@@ -172,6 +172,7 @@ return [
         Collective\Html\HtmlServiceProvider::class,
         Yajra\Datatables\DatatablesServiceProvider::class,
         Zizaco\Entrust\EntrustServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,
     ],
 
     /*
@@ -223,6 +224,7 @@ return [
         'Html'      => Collective\Html\HtmlFacade::class,
         'Datatables' => Yajra\Datatables\Datatables::class,
         'Entrust'   => Zizaco\Entrust\EntrustFacade::class,
+        'PDF' => Barryvdh\DomPDF\Facade::class,
     ],
 
 ];

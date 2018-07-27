@@ -3,7 +3,7 @@
 @section('breadcrumb')
     <li><a href="{{route('bitacoras.index')}}">Bitácoras</a></li>
     <li class="active">{{ $binnacle->id }}</li>
-@stop
+@endsection
 
 @section('module')
     <div class="box box-danger">
@@ -47,4 +47,4 @@
             </div>
         </div>
     </div>
-@stop
+@endsection
