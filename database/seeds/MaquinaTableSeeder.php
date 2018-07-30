@@ -14,7 +14,7 @@ class MaquinaTableSeeder extends Seeder
     {
         Machine::create([
             'maquina_serie' => 'Serie000',
-            'maquina_ubicacion' => 'Ubicacion000',
+            'maquina_ubicacion' => 'Unicentro medellín',
             'maquina_casillas' => 15,
             'maquina_contacto' => 'contacto000',
             'maquina_telefono' => 'tele000',
@@ -23,8 +23,8 @@ class MaquinaTableSeeder extends Seeder
             'maquina_documentos' => 'documentos000',
             'maquina_servidor' => 'server000',
             'maquina_usuario' => 'user000',
-            'maquina_contraseña' => 'pass000',
-            'maquina_directorio' => 'test',
+            'maquina_contraseña' => md5('pass000'),
+            'maquina_directorio' => 'unimedellin',
             'maquina_ultima' => date('Y-m-d H:m:s'),
             'maquina_comision1' => 10,
             'maquina_comision2' => 15,
