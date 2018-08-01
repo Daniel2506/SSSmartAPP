@@ -3,8 +3,8 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use App\Models\Base\Bills;
-use Log, DB, Storage;
+use App\Models\Base\Bills, App\Models\Base\Machine;
+use Log, DB;
 
 class Facturas extends Command
 {
@@ -50,33 +50,37 @@ class Facturas extends Command
         // Contenedor de archivos
         $paths = [];
 
-        $directories = DB::table('maquinas')->select('maquina_directorio')->get();
+        $directories = Machine::select('maquina_directorio')->get();
         foreach ($directories as $directory) {
             $paths = array_merge($paths, ftp_nlist($connection, $directory->maquina_directorio));
         }
+        
         DB::beginTransaction();
         try {
             foreach ($paths as $path) {
 
                 list($directory, $name) = explode('/', $path);
+                $machine = Machine::where('maquina_directorio', $directory)->first();
 
-                // Valido que archivo se de factura ('Fplano...txt')
-                if (substr($name, 0, 1) === 'F') {
+                // Valido que archivo se de factura ('Fplano...pla')
+                if (substr($name, 0, 2) === 'Fp') {
+
                     $handle = 'file.txt';
                     $file = ftp_get($connection, $handle, $path, FTP_ASCII, 0);
 
                     foreach (file($handle) as $line) {
-                        list($numero, $prefijo, $f_emision, $f_inicio, $f_final, $casilla, $subtotal, $p_iva, $iva, $total, $pago, $cambio, $time) = explode('|', $line);
 
+                        list($numero, $prefijo, $f_emision, $f_inicio, $f_final, $casilla, $subtotal, $p_iva, $iva, $total, $pago, $cambio, $time) = explode('|', $line);
                         $exist = Bills::where('factura_numero', $numero)->where('factura_prefijo', $prefijo)->first();
+
                         if (!$exist instanceof Bills) {
                             $bill = new Bills;
-                            $bill->factura_maquina =  1;
+                            $bill->factura_maquina =  $machine->id;
                             $bill->factura_numero =  $numero;
                             $bill->factura_prefijo = $prefijo;
-                            $bill->factura_fecha_emision = $this->setDate($f_emision);
-                            $bill->factura_fh_inicio = $this->setDate($f_inicio);
-                            $bill->factura_fh_final = $this->setDate($f_final);
+                            $bill->factura_fecha_emision = $f_emision;
+                            $bill->factura_fh_inicio = $f_inicio;
+                            $bill->factura_fh_final = $f_final;
                             $bill->factura_casilla = $casilla;
                             $bill->factura_subtotal = $subtotal;
                             $bill->factura_iva_p = $p_iva;
@@ -89,7 +93,7 @@ class Facturas extends Command
                         }
                     }
                     unlink('file.txt');
-                    ftp_delete($connection, $path);
+                    // ftp_delete($connection, $path);
                 }
             }
             DB::commit();
@@ -101,15 +105,5 @@ class Facturas extends Command
         }
         ftp_close ($connection);
         Log::info('Rutina Ok');
-    }
-    /**
-    * Set formating date apply save model
-    *
-    * @return date()
-    */
-    public function setDate($date)
-    {
-        $time = strtotime(str_replace('/','-', $date));
-        return date('Y-m-d H:m:s', $time);
     }
 }

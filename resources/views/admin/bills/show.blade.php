@@ -3,11 +3,25 @@
 @section('breadcrumb')
     <li><a href="{{route('facturas.index')}}">Facturas</a></li>
     <li class="active">{{ $bill->id }}</li>
-@stop
+@endsection
 
 @section('module')
     <div class="box box-danger">
         <div class="box-body">
+            <div class="row">
+                <div class="form-group col-sm-3">
+                    <label class="control-label">Máquina</label>
+                    <div>{{$bill->machine->maquina_serie}}</div>
+                </div>
+                <div class="form-group col-sm-3">
+                    <label class="control-label">Ubicación máquina</label>
+                    <div>{{$bill->machine->maquina_ubicacion}}</div>
+                </div>
+                <div class="form-group col-sm-3">
+                    <label class="control-label">Casilla</label>
+                    <div>{{$bill->factura_casilla}}</div>
+                </div>
+            </div>
             <div class="row">
                 <div class="form-group col-sm-3">
                     <label class="control-label">Número</label>
@@ -34,10 +48,6 @@
                 <div class="form-group col-sm-3">
                     <label class="control-label">Tiempo</label>
                     <div>{{$bill->factura_tiempo}} mins</div>
-                </div>
-                <div class="form-group col-sm-3">
-                    <label class="control-label">Casilla</label>
-                    <div>{{$bill->factura_casilla}}</div>
                 </div>
             </div>
             <div class="row">

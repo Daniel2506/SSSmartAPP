@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Report;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Base\Finalized, App\Models\Base\Binnacle, App\Models\Base\Bills, App\Models\Base\Coin;
 use DB, App, View, Excel;
 
 class ResumenGeneralController extends Controller
@@ -17,90 +18,74 @@ class ResumenGeneralController extends Controller
     {
         if ($request->filled('type')) {
 
+            // Instance global object
+            $object = new \stdClass();
+
             //  Reference dates
             $start_at = "$request->start_at $request->start_at_time";
             $finish_at = "$request->finish_at $request->finish_at_time";
+            $machine =  $request->filled('machine_filter');
 
             // Recaudo
+            $query = Finalized::query();
+            $query->select(DB::raw('COUNT(*) as contador, SUM(finalizado_apagar) AS valor'));
+            $query->whereRaw("STR_TO_DATE(finalizado_ffinal, '%d/%m/%Y %h:%i') >= '$start_at'");
+            $query->whereRaw("STR_TO_DATE(finalizado_ffinal, '%d/%m/%Y %h:%i') <= '$finish_at'");
+            $object->recaudo = $query->get()->toArray();
 
             // Aperturas x Administrador
-            $sql = "
-                SELECT  SUM(bitacora_valor1) AS valor
-                FROM bitacoras
-                WHERE   bitacora_fh >= '$start_at' AND
-                        bitacora_fh <= '$finish_at' AND
-                        bitacora_accion = 'AConsulta'
-            ";
+            $query = Binnacle::query();
+            $query->select(DB::raw('COUNT(*) as contador, SUM(bitacora_valor1) AS valor'));
+            $query->whereRaw("STR_TO_DATE(bitacora_fh, '%d/%m/%Y %h:%i') >= '$start_at'");
+            $query->whereRaw("STR_TO_DATE(bitacora_fh, '%d/%m/%Y %h:%i') <= '$finish_at'");
+            $query->where('bitacora_accion', 'AConsulta');
+            $object->aperturas_con_pago = $query->get()->toArray();
 
-            $aperturas_con_pago = DB::select($sql);
-
-            $sql = "
-            SELECT  SUM(bitacora_valor2) AS valor
-            FROM bitacoras
-            WHERE   bitacora_fh >= '$start_at' AND
-                    bitacora_fh <= '$finish_at' AND
-                    bitacora_accion = 'AConsulta0'
-            ";
-
-            $aperturas_sin_pago = DB::select($sql);
+            $query = Binnacle::query();
+            $query->select(DB::raw('COUNT(*) as contador, SUM(bitacora_valor2) AS valor'));
+            $query->whereRaw("STR_TO_DATE(bitacora_fh, '%d/%m/%Y %h:%i') >= '$start_at'");
+            $query->whereRaw("STR_TO_DATE(bitacora_fh, '%d/%m/%Y %h:%i') <= '$finish_at'");
+            $query->where('bitacora_accion', 'AConsulta0');
+            $object->aperturas_sin_pago = $query->get()->toArray();
 
             // Facturacion
-            $sql = "
-                SELECT  SUM(factura_subtotal) AS subtotal,
-                        SUM(factura_iva) AS iva,
-                        SUM(factura_total) AS total
-                FROM facturas
-                WHERE   factura_fecha_emision >= '$request->start_at' AND
-                        factura_fecha_emision <= '$request->finish_at'
-            ";
-
-            $facturacion = DB::select($sql);
+            $query = Bills::query();
+            $query->select(DB::raw('SUM(factura_subtotal) AS subtotal, SUM(factura_iva) AS iva, SUM(factura_total) AS total'));
+            $query->whereRaw("STR_TO_DATE(factura_fecha_emision, '%d/%m/%Y') >= '$request->start_at'");
+            $query->whereRaw("STR_TO_DATE(factura_fecha_emision, '%d/%m/%Y') <= '$request->finish_at'");
+            $object->facturacion = $query->get()->toArray();
 
             // Vaciado hopper
-            $sql ="
-                SELECT  SUM(bitacora_valor1) AS cuenta,
-                        SUM(bitacora_valor2) AS valor
-                FROM bitacoras
-                WHERE   bitacora_fh >= '$start_at' AND
-                        bitacora_fh <= '$finish_at' AND
-                        bitacora_accion IN ('Vaciar3', 'Vaciar4', 'Vaciar5', 'Vaciar6')
-            ";
-
-            $vaciado_hopper = DB::select($sql);
+            $query = Binnacle::query();
+            $query->select(DB::raw('SUM(bitacora_valor1) AS cuenta, SUM(bitacora_valor2) AS valor'));
+            $query->whereRaw("STR_TO_DATE(bitacora_fh, '%d/%m/%Y %h:%i') >= '$start_at'");
+            $query->whereRaw("STR_TO_DATE(bitacora_fh, '%d/%m/%Y %h:%i') <= '$finish_at'");
+            $query->whereIn('bitacora_accion', ['Vaciar3', 'Vaciar4', 'Vaciar5', 'Vaciar6']);;
+            $object->vaciado_hopper = $query->get()->toArray();
 
             // Recargas
-            $sql ="
-                SELECT  SUM(bitacora_valor1) AS cuenta,
-                        SUM(bitacora_valor2) AS valor
-                FROM bitacoras
-                WHERE   bitacora_fh >= '$start_at' AND
-                        bitacora_fh <= '$finish_at' AND
-                        bitacora_accion IN ('Recarga3', 'Recarga4', 'Recarga5', 'Recarga6')
-            ";
-
-            $recargas =  DB::select($sql);
+            $query = Binnacle::query();
+            $query->select(DB::raw('SUM(bitacora_valor1) AS cuenta, SUM(bitacora_valor2) AS valor'));
+            $query->whereRaw("STR_TO_DATE(bitacora_fh, '%d/%m/%Y %h:%i') >= '$start_at'");
+            $query->whereRaw("STR_TO_DATE(bitacora_fh, '%d/%m/%Y %h:%i') <= '$finish_at'");
+            $query->whereIn('bitacora_accion', ['Recarga3', 'Recarga4', 'Recarga5', 'Recarga6']);
+            $object->recargas = $query->get()->toArray();
 
             // Rotacion
-            $sql ="
-                SELECT COUNT(f.id) / m.maquina_casillas AS result
-                FROM facturas AS f, maquinas AS m
-                WHERE   factura_fecha_emision >= '$request->start_at' AND
-                        factura_fecha_emision <= '$request->finish_at'
-            ";
-
-            $rotacion = DB::select($sql);
+            $query = Bills::query();
+            $query->select(DB::raw('COUNT(facturas.id) / maquina_casillas AS result'));
+            $query->join('maquinas', 'factura_maquina', '=', 'maquinas.id');
+            $query->whereRaw("STR_TO_DATE(factura_fecha_emision, '%d/%m/%Y') >= '$request->start_at'");
+            $query->whereRaw("STR_TO_DATE(factura_fecha_emision, '%d/%m/%Y') <= '$request->finish_at'");
+            $object->rotacion = $query->get()->toArray();
 
             // Vaciado cofre
-            $sql = "
-                SELECT  SUM(bitacora_valor1) AS cuenta,
-                        SUM(bitacora_valor2) AS valor
-                FROM bitacoras
-                WHERE   bitacora_fh >= '$start_at' AND
-                        bitacora_fh <= '$finish_at' AND
-                        bitacora_accion = 'Vcofre'
-            ";
-
-            $vaciado_cofre = DB::select($sql);
+            $query = Binnacle::query();
+            $query->select(DB::raw('SUM(bitacora_valor1) AS cuenta, SUM(bitacora_valor2) AS valor'));
+            $query->whereRaw("STR_TO_DATE(bitacora_fh, '%d/%m/%Y %h:%i') >= '$start_at'");
+            $query->whereRaw("STR_TO_DATE(bitacora_fh, '%d/%m/%Y %h:%i') <= '$finish_at'");
+            $query->where('bitacora_accion', 'Vcofre');
+            $object->vaciado_cofre = $query->get()->toArray();
 
             // Prepare report in Excel || Pdf
             $title = "Resumen general";
@@ -108,16 +93,16 @@ class ResumenGeneralController extends Controller
 
             switch ($type) {
                 case 'xls':
-                    Excel::create(sprintf('%s_%s_%s', $title, date('Y_m_d'), date('H_m_s')), function($excel) use($title, $type) {
-                        $excel->sheet('Excel', function($sheet) use($title, $type) {
-                            $sheet->loadView('reports.resumengeneral.report', compact('title', 'type'));
+                    Excel::create(sprintf('%s_%s_%s', $title, date('Y_m_d'), date('H_m_s')), function($excel) use($title, $type, $request, $object) {
+                        $excel->sheet('Excel', function($sheet) use($title, $type, $request, $object) {
+                            $sheet->loadView('reports.resumengeneral.report', compact('title', 'type', 'request', 'object'));
                         });
                     })->download('xls');
                 break;
 
                 case 'pdf':
                     $pdf = App::make('dompdf.wrapper');
-                    $pdf->loadHTML(View::make('reports.resumengeneral.report',  compact('title', 'type'))->render());
+                    $pdf->loadHTML(View::make('reports.resumengeneral.report',  compact('title', 'type', 'request', 'object'))->render());
                     $pdf->setPaper('letter', 'portrait')->setWarnings(false);
                     return $pdf->stream(sprintf('%s_%s_%s.pdf', $title, date('Y_m_d'), date('H_m_s')));
                 break;

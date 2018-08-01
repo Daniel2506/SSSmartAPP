@@ -26,12 +26,7 @@ app || (app = {});
                 processing: true,
                 serverSide: true,
                 language: window.Misc.dataTableES(),
-                ajax: {
-                    url: window.Misc.urlFull( Route.route('maquinas.index') ),
-                    data: function( data ) {
-                        data.datatables = true;
-                    }
-                },
+                ajax: window.Misc.urlFull( Route.route('maquinas.index') ),
                 columns: [
                     { data: 'maquina_serie', name: 'maquina_serie' },
                     { data: 'maquina_casillas', name: 'maquina_casillas'},

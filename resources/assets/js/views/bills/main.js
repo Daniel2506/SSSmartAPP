@@ -32,7 +32,7 @@ app || (app = {});
                 columns: [
                     { data: 'factura_numero', name: 'factura_numero' },
                     { data: 'factura_prefijo', name: 'factura_prefijo'},
-                    { data: 'factura_maquina', name: 'factura_maquina'},
+                    { data: 'maquina_serie', name: 'factura_maquina'}, /* Posivlemente un buscador provisonal 'name'*/
                     { data: 'factura_fecha_emision', name: 'factura_fecha_emision'},
                     { data: 'factura_total', name: 'factura_total' }
                 ],
@@ -42,11 +42,6 @@ app || (app = {});
                         render: function ( data, type, full, row ) {
                             return '<a href="'+ window.Misc.urlFull( Route.route('facturas.show', {facturas: full.id }) )  +'">' + data + '</a>';
                         }
-                    },
-                    // Provisional...
-                    {
-                        targets: 2,
-                        visible: false
                     }
                 ]
 			});

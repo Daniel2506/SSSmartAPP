@@ -11,7 +11,7 @@
                 Roles <small>Administración de roles</small>
             </h1>
             <ol class="breadcrumb">
-                <li><a href="{{ route('dashboard') }}"><i class="fa fa-dashboard"></i> {{trans('app.home')}}</a></li>
+                <li><a href="{{ route('dashboard') }}"><i class="fas fa-tachometer-alt"></i> {{trans('app.home')}}</a></li>
                 <li><a href="{{ route('roles.index')}}">Rol</a></li>
                 <% if( !_.isUndefined(edit) && !_.isNull(edit) && edit) { %>
                     <li><a href="<%- window.Misc.urlFull( Route.route('roles.show', { roles: id}) ) %>"><%- id %></a></li>
@@ -110,7 +110,7 @@
         <% _.each(permissions, function(permission) { %>
             <td class="text-center">
                 <span class="label label-<%- mpermissions.indexOf(permission.id) != -1 ? 'success' : 'danger'  %>">
-                    <i class="fa fa-fw fa-<%- mpermissions.indexOf(permission.id) != -1 ? 'check' : 'close'  %>"></i>
+                    <i class="fas fa-<%- mpermissions.indexOf(permission.id) != -1 ? 'check' : 'times'  %>"></i>
                 </span>
             </td>
         <% }); %>

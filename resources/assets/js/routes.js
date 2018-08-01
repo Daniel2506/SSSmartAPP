@@ -38,6 +38,12 @@ app || (app = {});
 
             // Binnacles
             'bitacoras(/)': 'getBinnaclesMain',
+
+            // Coins
+            'monedas(/)': 'getCoinsMain',
+
+            // Finalizados
+            'finalizados(/)': 'getFinishedMain',
         },
 
         /**
@@ -266,7 +272,7 @@ app || (app = {});
             this.mainBillsView = new app.MainBillsView( );
         },
         /**
-        * show view binnacles bills
+        * show view binnacles
         */
         getBinnaclesMain: function(){
             if ( this.mainBinnaclesView instanceof Backbone.View ){
@@ -275,6 +281,28 @@ app || (app = {});
             }
 
             this.mainBinnaclesView = new app.MainBinnaclesView( );
+        },
+        /**
+        * show view coins
+        */
+        getCoinsMain: function(){
+            if ( this.mainCoinsView instanceof Backbone.View ){
+                this.mainCoinsView.stopListening();
+                this.mainCoinsView.undelegateEvents();
+            }
+
+            this.mainCoinsView = new app.MainCoinsView( );
+        },
+        /**
+        * show view finished
+        */
+        getFinishedMain: function(){
+            if ( this.mainFinishedView instanceof Backbone.View ){
+                this.mainFinishedView.stopListening();
+                this.mainFinishedView.undelegateEvents();
+            }
+
+            this.mainFinishedView = new app.MainFinishedView( );
         }
 
     }));

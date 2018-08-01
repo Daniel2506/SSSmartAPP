@@ -55,6 +55,8 @@ Route::group(['middleware' => 'auth'], function()
 	Route::resource('maquinas', 'Admin\MaquinaController', ['except' => ['destroy']]);
 	Route::resource('bitacoras', 'Admin\BitacoraController', ['except' => ['destroy']]);
 	Route::resource('facturas', 'Admin\FacturaController', ['except' => ['destroy']]);
+	Route::resource('monedas', 'Admin\CoinController', ['except' => ['destroy']]);
+	Route::resource('finalizados', 'Admin\FinalizedController', ['except' => ['destroy']]);
 
 	/*
 	|-------------------------

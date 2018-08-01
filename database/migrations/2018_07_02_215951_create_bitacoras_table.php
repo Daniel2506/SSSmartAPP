@@ -16,12 +16,15 @@ class CreateBitacorasTable extends Migration
             $table->engine = 'InnoDB';
 
             $table->increments('id');
+            $table->integer('bitacora_maquina')->unsigned();
             $table->string('bitacora_usuario', 10);
             $table->string('bitacora_accion', 10);
             $table->double('bitacora_valor1');
             $table->double('bitacora_valor2');
             $table->string('bitacora_observaciones', 100);
-            $table->dateTime('bitacora_fh');
+            $table->string('bitacora_fh', 25)->unique();
+
+            $table->foreign('bitacora_maquina')->references('id')->on('maquinas')->onDelete('restrict');
         });
     }
 

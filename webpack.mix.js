@@ -14,10 +14,12 @@ let mix = require('laravel-mix');
  var paths = {
     'libs':    './resources/assets/libs/',
     'adminlte': './resources/assets/libs/AdminLTE/',
+    'node': './node_modules/',
     'resources': './resources/assets/js/'
  }
 
 mix.styles([
+    paths.node + '@fortawesome/fontawesome-free/css/all.min.css',
     paths.libs + 'jquery-ui/themes/base/core.css',
     paths.libs + 'jquery-ui/themes/base/spinner.css',
     paths.libs + 'jquery-ui/themes/base/theme.css',
@@ -28,13 +30,13 @@ mix.styles([
     paths.adminlte + 'plugins/datepicker/datepicker3.css',
     paths.adminlte + 'plugins/timepicker/bootstrap-timepicker.min.css',
     paths.adminlte + 'dist/css/AdminLTE.min.css',
-    paths.libs + 'font-awesome/css/font-awesome.min.css',
     paths.libs + 'datatables.net-bs/css/dataTables.bootstrap.css',
     paths.libs + 'datatables.net-buttons-bs/css/buttons.bootstrap.min.css',
 ], 'public/css/vendor.min.css');
 mix.sass('resources/assets/sass/app.scss', 'public/css/app.min.css');
 
 mix.scripts([
+    paths.node + '@fortawesome/fontawesome-free/js/all.min.js',
     paths.adminlte + 'plugins/jQuery/jquery-2.2.3.min.js',
     paths.libs + 'jquery-ui/ui/core.js',
     paths.libs + 'jquery-ui/ui/widget.js',
@@ -73,11 +75,10 @@ mix.scripts([
     paths.resources + 'init.js'
  ], 'public/js/app.min.js')
 
-
 // Cache busting
 mix.version();
 
 mix.copy(paths.adminlte + 'bootstrap/fonts/', 'public/fonts');
 mix.copy(paths.adminlte + 'plugins/iCheck/minimal/green**.png', 'public/css');
-mix.copy(paths.libs + 'font-awesome/fonts/', 'public/fonts');
+mix.copy(paths.node + '@fortawesome/fontawesome-free/webfonts/', 'public/webfonts');
 mix.copy(paths.libs + 'jquery-ui/themes/base/images/', 'public/css/images/');

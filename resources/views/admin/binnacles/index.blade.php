@@ -12,9 +12,9 @@
 		            <tr>
 		                <th width="5%">#</th>
 		                <th width="20%">Usuario</th>
-                        <th width="20%">Acción</th>
+                        <th width="15%">Acción</th>
 		                <th width="40%">Observaciones</th>
-		                <th width="15%">Fecha</th>
+		                <th width="20%">Fecha</th>
 		            </tr>
 		        </thead>
 		    </table>

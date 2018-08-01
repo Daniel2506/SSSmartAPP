@@ -8,7 +8,7 @@
 			Resumen general
 		</h1>
 		<ol class="breadcrumb">
-			<li><a href="{{ route('dashboard') }}"><i class="fa fa-dashboard"></i> {{ trans('app.home') }}</a></li>
+			<li><a href="{{ route('dashboard') }}"><i class="fas fa-tachometer-alt"></i> {{ trans('app.home') }}</a></li>
 			<li class="active">Resumen general</li>
 		</ol>
     </section>
@@ -28,7 +28,7 @@
                                 <div class="input-group">
                                     <input name="start_at_time" class="form-control input-sm timepicker" value="{{ date('H:m') }}" required>
                                     <div class="input-group-addon">
-                                        <i class="fa fa-clock-o"></i>
+                                        <i class="fas fa-clock"></i>
                                     </div>
                                 </div>
                             </div>
@@ -42,7 +42,7 @@
                                 <div class="input-group">
                                     <input type="text" name="finish_at_time" class="form-control input-sm timepicker" value="{{ date('H:m') }}" required>
                                     <div class="input-group-addon">
-                                        <i class="fa fa-clock-o"></i>
+                                        <i class="fas fa-clock"></i>
                                     </div>
                                 </div>
                             </div>
@@ -62,12 +62,12 @@
                 <div class="box-footer">
                     <div class="col-md-2 col-md-offset-4 col-sm-6 col-xs-6">
                         <button type="submit" class="btn btn-default btn-sm btn-block btn-export-xls-koi-component">
-                            <i class="fa fa-file-text-o"></i> {{ trans('app.xls') }}
+                            <i class="far fa-file-excel"></i> {{ trans('app.xls') }}
                         </button>
                     </div>
                     <div class="col-md-2 col-sm-6 col-xs-6">
                         <button type="submit" class="btn btn-default btn-sm btn-block btn-export-pdf-koi-component">
-                            <i class="fa fa-file-pdf-o"></i> {{ trans('app.pdf') }}
+                            <i class="far fa-file-pdf"></i> {{ trans('app.pdf') }}
                         </button>
                     </div>
                 </div>

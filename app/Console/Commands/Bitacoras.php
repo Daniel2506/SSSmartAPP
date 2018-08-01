@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use App\Models\Base\Binnacle;
+use App\Models\Base\Binnacle, App\Models\Base\Machine;
 use Log, DB;
 
 class Bitacoras extends Command
@@ -50,7 +50,7 @@ class Bitacoras extends Command
         // Contenedor de archivos
         $paths = [];
 
-        $directories = DB::table('maquinas')->select('maquina_directorio')->get();
+        $directories = Machine::select('maquina_directorio')->get();
         foreach ($directories as $directory) {
             $paths = array_merge($paths, ftp_nlist($connection, $directory->maquina_directorio));
         }
@@ -60,9 +60,10 @@ class Bitacoras extends Command
             foreach ($paths as $path) {
 
                 list($directory, $name) = explode('/', $path);
+                $machine = Machine::where('maquina_directorio', $directory)->first();
 
-                // Valido que archivo se de bitacora ('Bplano...txt')
-                if (substr($name, 0, 1) === 'B') {
+                // Valido que archivo se de bitacora ('Bplano...pla')
+                if (substr($name, 0, 2) === 'Bp') {
                     $handle = 'file.txt';
 
                     $file = ftp_get($connection, $handle, $path, FTP_ASCII, 0);
@@ -72,17 +73,18 @@ class Bitacoras extends Command
                         $exist = Binnacle::where('bitacora_fh', $fecha_hora)->first();
                         if (!$exist instanceof Binnacle) {
                             $bitacora = new Binnacle;
+                            $bitacora->bitacora_maquina = $machine->id;
                             $bitacora->bitacora_usuario = $user;
                             $bitacora->bitacora_accion = $action;
                             $bitacora->bitacora_valor1 = $value1;
                             $bitacora->bitacora_valor2 = $value2;
                             $bitacora->bitacora_observaciones = $observation;
-                            $bitacora->bitacora_fh = $this->setDate($fecha_hora);
+                            $bitacora->bitacora_fh = $fecha_hora;
                             $bitacora->save();
                         }
                     }
                     unlink('file.txt');
-                    ftp_delete($connection, $path);
+                    // ftp_delete($connection, $path);
                 }
             }
             DB::commit();

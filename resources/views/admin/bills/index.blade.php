@@ -2,7 +2,7 @@
 
 @section('breadcrumb')
     <li class="active">Facturas</li>
-@stop
+@endsection
 
 @section('module')
 	<div class="box box-danger" id="bills-main">
@@ -10,9 +10,9 @@
 			<table id="bills-search-table" class="table table-bordered table-striped" cellspacing="0" width="100%">
 		        <thead>
 		            <tr>
-		                <th width="20%">Número</th>
-                        <th width="20%">Prefijo</th>
-		                <th width="20%">Máquina</th>
+		                <th width="15%">Número</th>
+                        <th width="15%">Prefijo</th>
+		                <th width="30%">Máquina</th>
 		                <th width="20%">Emisión</th>
 		                <th width="20%">Total</th>
 		            </tr>

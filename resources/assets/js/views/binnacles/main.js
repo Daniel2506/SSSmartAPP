@@ -25,9 +25,6 @@ app || (app = {});
                 language: window.Misc.dataTableES(),
                 ajax: {
                     url: window.Misc.urlFull( Route.route('bitacoras.index') ),
-                    data: function( data ) {
-                        data.datatables = true;
-                    }
                 },
                 columns: [
                     { data: 'id', name: 'id' },
