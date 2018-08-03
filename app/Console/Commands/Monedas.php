@@ -72,15 +72,15 @@ class Monedas extends Command
 
                         list($canal, $denominacion, $hopper) = explode('~', $line);
 
-                        $exist = Coin::where('moneda_denominacion', $denominacion)->where('moneda_canal', $canal)->first();
-                        if (!$exist instanceof Coin) {
+                        $coin = Coin::where('moneda_denominacion', $denominacion)->where('moneda_canal', $canal)->first();
+                        if (!$coin instanceof Coin) {
                             $coin = new Coin;
                             $coin->moneda_maquina = $machine->id;
                             $coin->moneda_canal = $canal;
                             $coin->moneda_denominacion = $denominacion;
-                            $coin->moneda_hopper = $hopper;
-                            $coin->save();
                         }
+                        $coin->moneda_hopper = $hopper;
+                        $coin->save();
                     }
                     unlink('file.txt');
                     // ftp_delete($connection, $path);

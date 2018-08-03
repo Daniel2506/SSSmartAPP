@@ -37,7 +37,7 @@ class HomeController extends Controller
             $object->success = true;
             $object->chart_rotacion_dia = [];
             $object->chart_rotacion_smeses = [];
-            $object->chart_comisones_maquinas = [];
+            $object->chart_ventas_smeses = [];
 
             // Rotacion X dia
             $rotacion_dia = new \stdClass();
@@ -46,8 +46,8 @@ class HomeController extends Controller
 
             // Prepare query
             $sql = "
-                SELECT (COUNT(f.id) / m.maquina_casillas) as result, DATE_FORMAT(STR_TO_DATE(f.factura_fecha_emision, '%d/%m/%Y'), '%w') AS day, DATE_FORMAT(STR_TO_DATE(f.factura_fecha_emision, '%d/%m/%Y'), '%W') AS day_letters
-                FROM facturas as f, maquinas as m WHERE STR_TO_DATE(f.factura_fecha_emision, '%d/%m/%Y') > DATE_SUB(DATE(NOW()), INTERVAL 8 DAY) AND STR_TO_DATE(f.factura_fecha_emision, '%d/%m/%Y') <= DATE(NOW())
+                SELECT (COUNT(f.id) / m.maquina_casillas) as result, DATE_FORMAT(f.factura_fecha_emision, '%w') AS day, DATE_FORMAT(f.factura_fecha_emision, '%W') AS day_letters
+                FROM facturas as f, maquinas as m WHERE f.factura_fecha_emision > DATE_SUB(DATE(NOW()), INTERVAL 8 DAY) AND f.factura_fecha_emision <= DATE(NOW())
                 GROUP BY f.factura_fecha_emision ORDER BY DATE_FORMAT(DATE(NOW()), '%w')";
 
             // Execute sql
@@ -64,8 +64,8 @@ class HomeController extends Controller
 
             // Prepare query
             $sql = "
-                SELECT (COUNT(f.id) / m.maquina_casillas) as result, DATE_FORMAT(STR_TO_DATE(f.factura_fecha_emision, '%d/%m/%Y'), '%m') AS month, DATE_FORMAT(STR_TO_DATE(f.factura_fecha_emision, '%d/%m/%Y'), '%M') AS month_letters
-                FROM facturas as f, maquinas as m WHERE STR_TO_DATE(f.factura_fecha_emision, '%d/%m/%Y') <= DATE(NOW())
+                SELECT (COUNT(f.id) / m.maquina_casillas) as result, DATE_FORMAT(f.factura_fecha_emision, '%m') AS month, DATE_FORMAT(f.factura_fecha_emision, '%M') AS month_letters
+                FROM facturas as f, maquinas as m WHERE f.factura_fecha_emision <= DATE(NOW()) AND f.factura_fecha_emision > DATE_SUB(DATE(NOW()), INTERVAL 6 MONTH)
                 GROUP BY month";
 
             // Execute sql
@@ -75,38 +75,35 @@ class HomeController extends Controller
             $rotacion_smeses->labels = array_pluck($query, 'month_letters');
             $rotacion_smeses->data = array_pluck($query, 'result');
 
-            // Comisiones maquinas
-            $comisiones_maquinas = new \stdClass();
-            $comisiones_maquinas->labels = [];
-            $comisiones_maquinas->placeholder = [];
-            $comisiones_maquinas->data = [];
+            // Ventas maquinas
+            $ventas = new \stdClass();
+            $ventas->labels = [];
+            $ventas->placeholder = [];
+            $ventas->data = [];
 
             // Prepare query
             $sql = "
                 SELECT
-                    SUM(f.factura_subtotal) * (m.maquina_comision1 / 100) AS comision1,
-                    SUM(f.factura_subtotal) * (m.maquina_comision2 / 100) AS comision2,
-                    SUM(f.factura_subtotal) * (m.maquina_comision3 / 100) AS comision3,
-                    m.maquina_serie AS maquina, m.maquina_comision1 AS barra1, m.maquina_comision2 AS barra2, m.maquina_comision3 AS barra3
-                FROM facturas AS f , maquinas AS m
-                GROUP BY f.factura_maquina";
+                    SUM(f.factura_subtotal) AS subtotal,
+                    SUM(f.factura_iva) AS iva,
+                    SUM(f.factura_subtotal) * (m.maquina_comision1 / 100) + SUM(f.factura_subtotal) * (m.maquina_comision2 / 100) + SUM(f.factura_subtotal) * (m.maquina_comision3 / 100) as comisiones,
+                    DATE_FORMAT(f.factura_fecha_emision, '%M') AS month_letters, DATE_FORMAT(f.factura_fecha_emision, '%m') AS month
+                FROM facturas AS f , maquinas AS m WHERE f.factura_fecha_emision <= DATE(NOW()) AND f.factura_fecha_emision >= DATE_SUB(DATE(NOW()), INTERVAL 6 MONTH)
+                GROUP BY month";
 
             // Execute sql
             $query = DB::select($sql);
 
-            // Config chart comisiones maquinas
-            $comisiones_maquinas->labels = array_pluck($query, 'maquina');
-            $comisiones_maquinas->placeholder['barra1'] = array_pluck($query, 'barra1');
-            $comisiones_maquinas->placeholder['barra2'] = array_pluck($query, 'barra2');
-            $comisiones_maquinas->placeholder['barra3'] = array_pluck($query, 'barra3');
-            $comisiones_maquinas->data['comision1'] = array_pluck($query, 'comision1');
-            $comisiones_maquinas->data['comision2'] = array_pluck($query, 'comision2');
-            $comisiones_maquinas->data['comision3'] = array_pluck($query, 'comision3');
+            // Config chart ventas
+            $ventas->labels = array_pluck($query, 'month_letters');
+            $ventas->data['comisiones'] = array_pluck($query, 'comisiones');
+            $ventas->data['subtotal'] = array_pluck($query, 'subtotal');
+            $ventas->data['iva'] = array_pluck($query, 'iva');
 
             // Prepare object global
             $object->chart_rotacion_dia = $rotacion_dia;
             $object->chart_rotacion_smeses = $rotacion_smeses;
-            $object->chart_comisones_maquinas = $comisiones_maquinas;
+            $object->chart_ventas_smeses = $ventas;
 
             return response()->json($object);
         }

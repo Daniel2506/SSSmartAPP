@@ -52,7 +52,7 @@
                     <div class="col-md-12">
                         <div class="box box-solid">
                             <div class="box-header with-border">
-                                <h3 class="box-title">Comisiones máquinas</h3>
+                                <h3 class="box-title">Ventas últimos 6 meses</h3>
                                 <div class="box-tools pull-right">
                                     <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                                     </button>
@@ -61,7 +61,7 @@
                             </div>
                             <div class="box-body">
                                 <div class="chart">
-                                    <canvas id="chart_comisiones_maquinas" style="height: 230px; width: 548px;" width="548" height="230"></canvas>
+                                    <canvas id="chart_ventas" style="height: 230px; width: 548px;" width="548" height="230"></canvas>
                                 </div>
                             </div>
                         </div>

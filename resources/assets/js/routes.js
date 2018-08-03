@@ -44,6 +44,9 @@ app || (app = {});
 
             // Finalizados
             'finalizados(/)': 'getFinishedMain',
+
+            // CoinsCaskeds
+            'monedascofres(/)': 'getCoinsCasketMain',
         },
 
         /**
@@ -303,7 +306,18 @@ app || (app = {});
             }
 
             this.mainFinishedView = new app.MainFinishedView( );
-        }
+        },
+        /**
+        * show view coins casked
+        */
+        getCoinsCasketMain: function(){
+            if ( this.mainCoinsCasketView instanceof Backbone.View ){
+                this.mainCoinsCasketView.stopListening();
+                this.mainCoinsCasketView.undelegateEvents();
+            }
+
+            this.mainCoinsCasketView = new app.MainCoinsCasketView( );
+        },
 
     }));
 })(jQuery, this, this.document);

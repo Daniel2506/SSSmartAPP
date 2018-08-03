@@ -22,7 +22,7 @@ class CreateBitacorasTable extends Migration
             $table->double('bitacora_valor1');
             $table->double('bitacora_valor2');
             $table->string('bitacora_observaciones', 100);
-            $table->string('bitacora_fh', 25)->unique();
+            $table->dateTime('bitacora_fh')->unique();
 
             $table->foreign('bitacora_maquina')->references('id')->on('maquinas')->onDelete('restrict');
         });

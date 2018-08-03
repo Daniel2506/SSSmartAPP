@@ -38,19 +38,24 @@ class ModulesTableSeeder extends Seeder
         	'nivel1' => 5
     	]);
     	Module::create([
+        	'name' => 'monedascofres',
+        	'display_name' => 'Monedas cofre',
+        	'nivel1' => 6
+    	]);
+    	Module::create([
         	'name' => 'usuarios',
         	'display_name' => 'Usuarios',
-        	'nivel1' => 6
+        	'nivel1' => 7
     	]);
         Module::create([
             'name' => 'roles',
             'display_name' => 'Roles',
-            'nivel1' => 7
+            'nivel1' => 8
         ]);
         Module::create([
             'name' => 'resumengeneral',
             'display_name' => 'Resumen general',
-            'nivel1' => 8
+            'nivel1' => 9
         ]);
     }
 }

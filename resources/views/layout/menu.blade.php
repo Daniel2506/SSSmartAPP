@@ -25,6 +25,10 @@
         <a href="{{ route('monedas.index') }}"><i class="fas fa-coins"></i><span> Monedas</span> </a>
     </li>
 
+    <li class="{{ Request::segment(1) == 'monedascofres' ? 'active' : '' }}">
+        <a href="{{ route('monedascofres.index') }}"><i class="fas fa-briefcase"></i><span> Monedas cofre</span> </a>
+    </li>
+
     <li class="{{ Request::segment(1) == 'usuarios' ? 'active' : '' }}">
         <a href="{{ route('usuarios.index') }}"><i class="fas fa-users"></i> <span> Usuarios</span></a>
     </li>

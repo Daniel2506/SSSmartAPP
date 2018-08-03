@@ -51,7 +51,7 @@ app || (app = {});
                     // Render
                     _this.chart_rotacion_dia(resp.chart_rotacion_dia);
                     _this.chart_rotacion_smeses(resp.chart_rotacion_smeses);
-                    _this.chart_comisones_maquinas(resp.chart_comisones_maquinas);
+                    _this.chart_ventas_smeses(resp.chart_ventas_smeses);
                 }
             })
             .fail(function(jqXHR, ajaxOptions, thrownError) {
@@ -149,31 +149,31 @@ app || (app = {});
             });
         },
         /**
-        * Render view Chart comisiones maquinas
+        * Render view Chart ventas ultimos seis meses
         */
-        chart_comisones_maquinas : function(config){
-            var ctx     = this.$('#chart_comisiones_maquinas').get(0).getContext('2d');
+        chart_ventas_smeses : function(config){
+            var ctx     = this.$('#chart_ventas').get(0).getContext('2d');
             var myChart = new Chart(ctx, {
                 type: 'bar',
                 data: {
                     labels: config.labels,
                     datasets: [{
-                        label: 'Comisión ' + config.placeholder.barra1 + ' %',
-                        data: config.data.comision1,
+                        label: 'Subtotal',
+                        data: config.data.subtotal,
                         backgroundColor: 'rgba(255, 99, 132, 0.2)',
                         borderColor: 'rgba(255, 99, 132, 1)',
                         borderWidth: 1
                     },
                     {
-                        label: 'Comisión ' + config.placeholder.barra2 + ' %',
-                        data: config.data.comision2,
+                        label: 'Iva',
+                        data: config.data.iva,
                         backgroundColor: 'rgba(54, 162, 235, 0.2)',
                         borderColor: 'rgba(54, 162, 235, 1)',
                         borderWidth: 1
                     },
                     {
-                        label: 'Comisión ' + config.placeholder.barra3 + ' %',
-                        data: config.data.comision3,
+                        label: 'Comisiones',
+                        data: config.data.comisiones,
                         backgroundColor: 'rgba(255, 206, 86, 0.2)',
                         borderColor: 'rgba(255, 206, 86, 1)',
                         borderWidth: 1
@@ -181,10 +181,20 @@ app || (app = {});
                 },
                 options: {
                     responsive: true,
+                    tooltips: {
+                        callbacks: {
+                            label: function(tooltipItem, data) {
+                                return data.datasets[tooltipItem.datasetIndex].label + ': '+ window.Misc.currency(tooltipItem.yLabel)
+                            }
+                        }
+                    },
                     scales: {
                         yAxes: [{
                             ticks: {
-                                beginAtZero:true
+                                beginAtZero:true,
+                                callback: function(label, index, labels) {
+                                    return window.Misc.currency(label);
+                                }
                             }
                         }]
                     }

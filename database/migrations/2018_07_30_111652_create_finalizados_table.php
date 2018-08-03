@@ -19,8 +19,8 @@ class CreateFinalizadosTable extends Migration
             $table->increments('id');
             $table->integer('finalizado_maquina')->unsigned();
             $table->integer('finalizado_casilla')->unsigned();
-            $table->string('finalizado_finicio',25);
-            $table->string('finalizado_ffinal',25);
+            $table->dateTime('finalizado_finicio');
+            $table->dateTime('finalizado_ffinal');
             $table->integer('finalizado_tiempo')->unsigned();
             $table->double('finalizado_apagar');
             $table->double('finalizado_ingreso');

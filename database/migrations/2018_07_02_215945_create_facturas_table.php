@@ -19,9 +19,9 @@ class CreateFacturasTable extends Migration
             $table->integer('factura_maquina')->unsigned()->nullable();
             $table->integer('factura_numero')->unsigned();
             $table->string('factura_prefijo', 10);
-            $table->string('factura_fecha_emision', 25);
-            $table->string('factura_fh_inicio', 25);
-            $table->string('factura_fh_final', 25);
+            $table->date('factura_fecha_emision');
+            $table->dateTime('factura_fh_inicio');
+            $table->dateTime('factura_fh_final');
             $table->integer('factura_casilla')->unsigned();
             $table->double('factura_subtotal');
             $table->double('factura_iva');

@@ -56,7 +56,7 @@ return [
 
             // Optional FTP Settings...
             // 'port'     => 21,
-            // 'root'     => '',
+            // 'root'     => storage_path('cascos/'),
             // 'passive'  => true,
             // 'ssl'      => true,
             // 'timeout'  => 30,

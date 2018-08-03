@@ -38,9 +38,9 @@ class PutFilesCommand extends Command
      */
     public function handle()
     {
-        foreach (Storage::files('test') as $path) {
+        foreach (Storage::files() as $path) {
             $file = Storage::get($path);
-            Storage::disk('ftp')->copy($path, $file);
+            Storage::disk('ftp')->put("unimedellin/$path", $file);
         }
     }
 }
