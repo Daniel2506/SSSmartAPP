@@ -15,6 +15,17 @@
 
    	<section class="content">
 	    <div class="box box-danger">
+            @if ($errors->any())
+                <div class="box-header without-border">
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                </div>
+            @endif
 	    	<form action="{{ route('resumengeneral.index') }}" method="GET" data-toggle="validator">
 			 	<input class="hidden" id="type-report-koi-component" name="type"></input>
 				<div class="box-body">

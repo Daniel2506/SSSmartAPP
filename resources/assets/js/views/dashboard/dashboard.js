@@ -12,18 +12,28 @@ app || (app = {});
     app.DashboardView = Backbone.View.extend({
 
         el: '#dashboard-main',
-
+        templateCharts: _.template( ($('#charts-dashboard-tpl').html() || '') ),
+        events: {
+            'change .change-view-for-machine' : 'changeViewMachine'
+        },
         /**
         * Constructor Method
         */
         initialize : function() {
-            this.referenceCharts();
+            this.$('#body-charts').html(this.templateCharts);
+            var machineVal = this.$('#dashboard_machine_filter').val();
+            this.referenceCharts(machineVal);
         },
-
+        /**
+        * Change filter machine 
+        */
+        changeViewMachine: function(e){
+            this.initialize();
+        },
         /**
         * Reference view charts
         */
-        referenceCharts : function(){
+        referenceCharts : function(machineVal){
 
             var _this = this;
 
@@ -31,12 +41,9 @@ app || (app = {});
             $.ajax({
                 url: window.Misc.urlFull( Route.route('dashboard.charts') ),
                 type: 'GET',
-                beforeSend: function() {
-                    window.Misc.setSpinner( _this.spinner );
-                }
+                data: {machine: machineVal},
             })
             .done(function(resp) {
-                window.Misc.removeSpinner( _this.spinner );
                 if(!_.isUndefined(resp.success)) {
                     // response success or error
                     var text = resp.success ? '' : resp.errors;
@@ -49,13 +56,12 @@ app || (app = {});
                     }
 
                     // Render
-                    _this.chart_rotacion_dia(resp.chart_rotacion_dia);
-                    _this.chart_rotacion_smeses(resp.chart_rotacion_smeses);
-                    _this.chart_ventas_smeses(resp.chart_ventas_smeses);
+                    _this.chart_rotacion_dia(resp.object.chart_rotacion_dia);
+                    _this.chart_rotacion_smeses(resp.object.chart_rotacion_smeses);
+                    _this.chart_ventas_smeses(resp.object.chart_ventas_smeses);
                 }
             })
             .fail(function(jqXHR, ajaxOptions, thrownError) {
-                window.Misc.removeSpinner( _this.spinner );
                 alertify.error(thrownError);
             })
         },
@@ -64,7 +70,7 @@ app || (app = {});
         * Render view Chart rotacion X dia
         */
         chart_rotacion_dia : function(config){
-            var ctx     = this.$('#chart_rotacion_dia').get(0).getContext('2d');
+            var ctx     = this.$('#chart_rotacion_dia');
             var myChart = new Chart(ctx, {
                 type: 'bar',
                 data: {
@@ -108,7 +114,7 @@ app || (app = {});
         * Render view Chart rotacion ultimos seis meses
         */
         chart_rotacion_smeses : function(config){
-            var ctx     = this.$('#chart_rotacion_smeses').get(0).getContext('2d');
+            var ctx     = this.$('#chart_rotacion_smeses');
             var myChart = new Chart(ctx, {
                 type: 'bar',
                 data: {
@@ -152,7 +158,7 @@ app || (app = {});
         * Render view Chart ventas ultimos seis meses
         */
         chart_ventas_smeses : function(config){
-            var ctx     = this.$('#chart_ventas').get(0).getContext('2d');
+            var ctx     = this.$('#chart_ventas');
             var myChart = new Chart(ctx, {
                 type: 'bar',
                 data: {

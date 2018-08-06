@@ -66,6 +66,25 @@
 				.rtable tr:nth-child(even) {
 					background-color: #f2f2f2
 				}
+				.mtable {
+					width: 100%;
+				    border-collapse: collapse;
+					padding-left: 100px;
+					padding-right: 100px;
+				}
+
+				.mtable th {
+					border: 1px solid black;
+					padding-left: 2px;
+				}
+
+				.mtable td, th {
+					height: 19px;
+				}
+
+				.mtable tr:nth-child(even) {
+					background-color: #f2f2f2
+				}
 
 				.htable {
 					width: 100%;
@@ -155,7 +174,9 @@
 		{{-- Title --}}
 		@include('reports.title')
 		<br/>
-
+		<script type="text/php">
+			!isset($pdf) ?: $pdf->page_text(279, $pdf->get_height() - 15, "Página {PAGE_NUM} de {PAGE_COUNT}", "Arial", 7, array(0,0,0), 0.0, 0.0, 0.0);
+		</script>
 		@yield('content')
 	</body>
 </html>

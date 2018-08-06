@@ -42,7 +42,7 @@ return [
         4 => 'Jueves',
         5 => 'Viernes',
         6 => 'Sábado',
-        7 => 'Domingo'
+        0 => 'Domingo'
     ],
 
     'direcciones' => [
