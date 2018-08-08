@@ -20,7 +20,7 @@ class Bitacoras extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Command store in table the bitacoras';
 
     /**
      * Create a new command instance.
@@ -84,7 +84,7 @@ class Bitacoras extends Command
                         }
                     }
                     unlink('file.txt');
-                    // ftp_delete($connection, $path);
+                    ftp_delete($connection, $path);
                 }
             }
             DB::commit();

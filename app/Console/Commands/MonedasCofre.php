@@ -20,7 +20,7 @@ class MonedasCofre extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Command store in table the coins';
 
     /**
      * Create a new command instance.
@@ -83,7 +83,7 @@ class MonedasCofre extends Command
                         $coinCasket->save();
                     }
                     unlink('file.txt');
-                    // ftp_delete($connection, $path);
+                    ftp_delete($connection, $path);
                 }
             }
             DB::commit();

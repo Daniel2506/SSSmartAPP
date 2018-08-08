@@ -20,7 +20,7 @@ class Facturas extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Command store in table the facturas';
 
     /**
      * Create a new command instance.
@@ -93,7 +93,7 @@ class Facturas extends Command
                         }
                     }
                     unlink('file.txt');
-                    // ftp_delete($connection, $path);
+                    ftp_delete($connection, $path);
                 }
             }
             DB::commit();

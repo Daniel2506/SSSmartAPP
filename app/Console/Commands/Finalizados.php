@@ -20,7 +20,7 @@ class Finalizados extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Command store in table the finalizados';
 
     /**
      * Create a new command instance.
@@ -86,7 +86,7 @@ class Finalizados extends Command
                         }
                     }
                     unlink('file.txt');
-                    // ftp_delete($connection, $path);
+                    ftp_delete($connection, $path);
                 }
             }
             DB::commit();
