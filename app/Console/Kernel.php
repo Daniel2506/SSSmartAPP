@@ -15,6 +15,10 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         //
         \App\Console\Commands\Facturas::class,
+        \App\Console\Commands\Bitacoras::class,
+        \App\Console\Commands\Finalizados::class,
+        \App\Console\Commands\Monedas::class,
+        \App\Console\Commands\MonedasCofre::class,
     ];
 
     /**
@@ -25,7 +29,11 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('facturas:import')->cron('* * * * *');
+        $schedule->command('facturas:import')->hourly();
+        $schedule->command('bitacoras:import')->hourly();
+        $schedule->command('finalizados:import')->hourly();
+        $schedule->command('monedas:import')->hourly();
+        $schedule->command('monedascofre:import')->hourly();
     }
 
     /**
