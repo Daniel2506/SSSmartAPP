@@ -29,3 +29,26 @@ label {
 .btn-export-pdf-koi-component {
 	color: red;
 }
+
+.form-horizontal .control-label {
+	text-align: left;
+}
+
+label {
+	white-space: nowrap;
+}
+.ui-spinner {
+	overflow: visible;
+}
+
+// .ui-widget {
+// 	font-size: 12px;
+// }
+
+.ui-widget-content {
+	border: none;
+}
+
+.spinner-percentage {
+	margin: 0;
+}

@@ -20,7 +20,7 @@ class CreateMaquinasTable extends Migration
             $table->string('maquina_ubicacion', 100);
             $table->integer('maquina_casillas')->unsigned();
             $table->string('maquina_contacto', 100);
-            $table->string('maquina_telefono', 100);
+            $table->string('maquina_telefono', 25);
             $table->string('maquina_direccion', 100);
             $table->string('maquina_email', 100);
             $table->string('maquina_documentos', 100);

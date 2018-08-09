@@ -78,7 +78,7 @@ mix.scripts([
 // Cache busting
 mix.version();
 
-// mix.copy(paths.adminlte + 'bootstrap/fonts/', 'public/fonts');
+mix.copy(paths.adminlte + 'bootstrap/fonts/', 'public/fonts');
 mix.copy(paths.adminlte + 'plugins/iCheck/minimal/green**.png', 'public/css');
 mix.copy(paths.node + '@fortawesome/fontawesome-free/webfonts/', 'public/webfonts');
 mix.copy(paths.libs + 'jquery-ui/themes/base/images/', 'public/css/images/');

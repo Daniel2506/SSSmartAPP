@@ -139,7 +139,21 @@
         </div>
         <div class="form-group col-sm-3">
             <label>Teléfono</label>
-            <input type="text" name="maquina_telefono"  class="form-control input-sm" value="<%- maquina_telefono %>" data-inputmask="'mask': '(999) 999-99-99  EXT 999'" data-mask required>
+            <input type="text" name="maquina_telefono"  class="form-control input-sm" value="<%- maquina_telefono %>" maxlength="25" required>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-sm-3">
+            <label for="maquina_comision1" class="control-label">Comisión 1</label>
+            <input type="text" name="maquina_comision1"  class="form-control input-sm spinner-percentage" value="<%- maquina_comision1 %>" required>
+        </div>
+        <div class="form-group col-sm-3">
+            <label for="maquina_comision2" class="control-label">Comisión 2</label>
+            <input type="text" name="maquina_comision2"  class="form-control input-sm spinner-percentage" value="<%- maquina_comision2 %>" required>
+        </div>
+        <div class="form-group col-sm-3">
+            <label for="maquina_comision3" class="control-label">Comisión 3</label>
+            <input type="text" name="maquina_comision3"  class="form-control input-sm spinner-percentage" value="<%- maquina_comision3 %>" required>
         </div>
     </div>
     <div class="row">

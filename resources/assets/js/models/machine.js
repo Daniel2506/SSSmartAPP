@@ -28,7 +28,10 @@ app || (app = {});
             'maquina_usuario': '',
             'maquina_contraseña': '',
             'maquina_directorio': '',
-            'maquina_ultima': ''
+            'maquina_ultima': '',
+            'maquina_comision1' : 0,
+            'maquina_comision2' : 0,
+            'maquina_comision3' : 0
         }
     });
 
