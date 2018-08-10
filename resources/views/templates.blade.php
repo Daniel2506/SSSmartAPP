@@ -71,7 +71,7 @@
                             </div>
                             <div class="form-group col-md-2 col-xs-3">
                                 <button type="submit" class="btn btn-success btn-sm btn-block">
-                                    <i class="fas fa-plus"></i>
+                                    <i class="fa fa-plus"></i>
                                 </button>
                             </div>
                         </div>
@@ -99,7 +99,7 @@
 	<% if(edit) { %>
         <td class="text-center">
             <a class="btn btn-default btn-xs item-roles-remove" data-resource="<%- id %>">
-                <span><i class="fas fa-times"></i></span>
+                <span><i class="fa fa-times"></i></span>
             </a>
     	</td>
     <% } %>

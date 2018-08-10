@@ -2,7 +2,7 @@
     <a href="{{ route('dashboard') }}" class="logo">
         <span class="logo-mini">SS&S</span>
         {{-- logo for regular state and mobile devices --}}
-        <span class="logo-lg"><b>{{ config('koi.app.name') }}</b>APP</span>
+        <span class="logo-lg"><b>{{ config('koi.app.name') }}</b></span>
     </a>
 
     {{-- Header Navbar: style can be found in header.less --}}

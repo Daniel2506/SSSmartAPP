@@ -8,7 +8,7 @@
 			Resumen general
 		</h1>
 		<ol class="breadcrumb">
-			<li><a href="{{ route('dashboard') }}"><i class="fas fa-tachometer-alt"></i> {{ trans('app.home') }}</a></li>
+			<li><a href="{{ route('dashboard') }}"><i class="fa fa-dashboard"></i> {{ trans('app.home') }}</a></li>
 			<li class="active">Resumen general</li>
 		</ol>
     </section>
@@ -39,7 +39,7 @@
                                 <div class="input-group">
                                     <input name="start_at_time" class="form-control input-sm timepicker" value="{{ date('H:m') }}" required>
                                     <div class="input-group-addon">
-                                        <i class="fas fa-clock"></i>
+                                        <i class="fa fa-clock-o"></i>
                                     </div>
                                 </div>
                             </div>
@@ -53,7 +53,7 @@
                                 <div class="input-group">
                                     <input type="text" name="finish_at_time" class="form-control input-sm timepicker" value="{{ date('H:m') }}" required>
                                     <div class="input-group-addon">
-                                        <i class="fas fa-clock"></i>
+                                        <i class="fa fa-clock-o"></i>
                                     </div>
                                 </div>
                             </div>

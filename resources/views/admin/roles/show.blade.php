@@ -6,7 +6,7 @@
             Roles <small>Administración de roles</small>
         </h1>
         <ol class="breadcrumb">
-            <li><a href="{{ route('dashboard') }}"><i class="fas fa-tachometer-alt"></i> {{ trans('app.home') }}</a></li>
+            <li><a href="{{ route('dashboard') }}"><i class="fa fa-dashboard"></i> {{ trans('app.home') }}</a></li>
             <li><a href="{{ route('roles.index') }}">Rol</a></li>
             <li class="active">{{ $rol->id }}</li>
         </ol>

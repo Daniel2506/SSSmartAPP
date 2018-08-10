@@ -23,7 +23,7 @@ mix.styles([
     paths.libs + 'jquery-ui/themes/base/spinner.css',
     paths.libs + 'jquery-ui/themes/base/theme.css',
     paths.adminlte + 'bootstrap/css/bootstrap.min.css',
-    paths.adminlte + 'dist/css/skins/skin-red-light.min.css',
+    paths.adminlte + 'dist/css/skins/skin-red.min.css',
     paths.adminlte + 'plugins/iCheck/minimal/green.css',
     paths.adminlte + 'plugins/select2/select2.min.css',
     paths.adminlte + 'plugins/datepicker/datepicker3.css',
@@ -31,7 +31,7 @@ mix.styles([
     paths.adminlte + 'dist/css/AdminLTE.min.css',
     paths.libs + 'datatables.net-bs/css/dataTables.bootstrap.css',
     paths.libs + 'datatables.net-buttons-bs/css/buttons.bootstrap.min.css',
-    paths.node + '@fortawesome/fontawesome-free/css/all.min.css',
+    paths.libs + 'font-awesome/css/font-awesome.min.css',
 ], 'public/css/vendor.min.css');
 
 mix.sass('resources/assets/sass/app.scss', 'public/css/app.min.css');
@@ -78,7 +78,7 @@ mix.scripts([
 // Cache busting
 mix.version();
 
+mix.copy(paths.libs + 'font-awesome/fonts', 'public/fonts');
 mix.copy(paths.adminlte + 'bootstrap/fonts/', 'public/fonts');
 mix.copy(paths.adminlte + 'plugins/iCheck/minimal/green**.png', 'public/css');
-mix.copy(paths.node + '@fortawesome/fontawesome-free/webfonts/', 'public/webfonts');
 mix.copy(paths.libs + 'jquery-ui/themes/base/images/', 'public/css/images/');
